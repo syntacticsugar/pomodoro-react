@@ -106,11 +106,12 @@ var Activities = React.createClass({
   },
   renderActivity : function(item,key) {
     var activities = this.props.activities;
-    console.log('\n\n\n\n\n\ninside renderActivities');
+    console.log('\n\n\n\n\n\ninside renderActivity');
     return (
       <div>
         <li key={key}>
-          key:{key}, item: {item}
+          <span className="activity-key">key: {key}</span>
+          <span className="activity-text">{item.text}</span>
         </li>
       </div>
     )
@@ -120,10 +121,11 @@ var Activities = React.createClass({
     return (
       <div>
         <ol className='activities-ol'>
-          {/*
-          {Object.keys(activities).map(this.renderActivity) }
-            */}
-          {Object.keys(activities).map(this.renderActivity) }
+          {Object.keys(activities).map(
+            function(key) {
+              return this.renderActivity(activities[key],key);
+            }.bind(this)
+          )}
         </ol>
         <form
           ref='activityForm'
