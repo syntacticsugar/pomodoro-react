@@ -102,6 +102,7 @@ var Activities = React.createClass({
       // forgot what this part is for:
       timesActivityWasCompleted : [],
     };
+    this.props.addActivity(activity);
     this.refs.activityForm.reset();
   },
   renderActivity : function(item,key) {
