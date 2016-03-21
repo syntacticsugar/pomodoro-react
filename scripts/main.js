@@ -1,132 +1,154 @@
-"use strict";
+"use strict"
 
 var React = require('react');
 var ReactDOM = require('react-dom');
 
+//import {Timer} from "./components/timer.jsx";
+var Timer = require("./components/timer.js");
+var Distractions = require("./components/distractions.js");
+
 var App = React.createClass({
   getInitialState : function() {
     return {
-      currentActivityIndex : null,
-      activities : {}, // e.g. [{ kind: 'activity', text: 'wash the dishes' , distractions : []}], []
-      distractions : [], // just array of strings, e.g. ['check email', 'CNN', 'Daily Mail', 'hacker news']
-      finishedActivites : [],
+      activityInput : "",
+      activities : [],
     }
   },
-  addActivityToState : function(newActivityText) {
-    var timestamp = (new Date()).getTime();
-    this.state.activities['activity-' + timestamp] = {
-      kind : "activity",
-      text : newActivityText,
-      isFinished : false,
-      distractions : [],
-    }
-    console.log(this.state.activities);
-    this.setState({activities: this.state.activities});
+  // state has been updated
+  componentDidUpdate : function() {
+    console.log("componentDidUpdate.")
+  },
+  // updateActivityInput is a callback for the onChange event listener
+  updateActivityInput : function(event) {
+    this.setState({ activityInput : event.target.value })
+  },
+  addActivity : function(activity) {
+    var timestamp = (new Date).getTime();
+    this.state.activities['activity-' + timestamp] = activity;
+    this.setState({ activities : this.state.activities });
+  },
+  deleteActivity : function(index) {
+    // prevent refresh
+    //event.preventDefault();
+    delete this.state.activities[index];
+    this.setState({
+      activities : this.state.activities,
+    })
+  },
+  markDoneActivity : function(key) {
+    this.state.activities[key].status = "done";
+    this.state.activities[key].isFinished = true;
+    this.setState({
+      activities : this.state.activities,
+    })
+  },
+  renderActivities : function() {
+    var allActivities = this.state.activities;
+    var lexicalThis = this;
 
-  },
-  deleteActivityFromState : function(key) {
-    console.log("inside deleteActivityFromState. Key is:");
-    console.log(key);
-    delete this.state.activities[key];
-    this.setState({ activities: this.state.activities });
-  },
-  addDistractionToState : function(activityIndex, newDistractionText) {
-    event.preventDefault();
-    // this method is INCOMPLETE
-    this.state.activities[activityIndex].distractions.push(newDistractionText);
-    this.setState({activities: this.state.activities});
-  },
-  render : function() {
-    var currentActivityIndex = this.state.currentActivityIndex;
-    var activities = this.state.activities;
-    if (currentActivityIndex !== null) {
+    // return the new array, without the 'return' keyword,
+    // getActivities would only hold the value;
+    return allActivities.map( function(element,index) {
+      // debugger;
       return (
-        <div>
-          <h1>Distractions:</h1>
-          <ListView
-            data={activities[currentActivityIndex].distractions.map ( function(x){
-              return {
-                kind : 'distraction',
-                text : x,
+        // return an ARRAY of DOM elements
+        <li key={index}>
+          {element}
+            <a
+              className="delete-link"
+              onClick={ function(event) {
+                console.log(event);
+                lexicalThis.deleteActivity(index)}
               }
-            })}
-            addToState={ function(newDistractionText) {
-              this.addDistractionToState(currentActivityIndex,newDistractionText);
-            }.bind(this)}
-          />
-        </div>
+            href="#"
+            >
+            Delete
+            </a>
+        </li>
       )
-    } else {
-      return (
-        <div>
-          <h1>PomAGoGo</h1>
-          <h4>Eliminate distractions. Finish tasks.</h4>
-          <ListView
-            data={this.state.activities}
-            addToState={this.addActivityToState}
-            deleteItem={this.deleteActivityFromState}
-          />
-        </div>
-      )
-    }
+      // without `bind`, `this`===allActivities, according to Giorgio
+      // actually, debugging `this` didn't return allActivities!
+      // oh noes... Giorgio, why have you forsaken me
+    //}.bind(this)); // now the `this` refers to <App/>, bc renderActivities is a METHOD
+    });
+  },
+  render : function(){
+    return (
+      <div>
+        <h4>Enter a task or Pomodoro activity, yo</h4>
+        <Activities
+            activities = {this.state.activities}
+            activityInput = {this.state.activityInput}
+            updateActivityInput={this.updateActivityInput}
+            addActivity={this.addActivity}
+            deleteActivity={this.deleteActivity}
+        />
+        <p><em>so far you wrote:</em> <span className='text-muted'>({this.state.activityInput.length}):{this.state.activityInput}</span></p>
+        <Timer />
+      </div>
+    )
   }
 });
 
-var ListView = React.createClass({
-  createItem : function(event) {
+var Activities = React.createClass({
+  createActivity : function(event) {
     event.preventDefault();
-    var inputText = this.refs.inputText.value;
-    /*
-    var inputText = {
-      text : this.refs.inputText.value,
+
+    var activity = {
+      text : this.refs.name.value,
+      status : 'new',
+      isFinished : false,
+      distractions : {},
+      // forgot what this part is for:
+      timesActivityWasCompleted : [],
     };
-    */
-    console.log("inputText:");
-    console.log(inputText);
-    this.props.addToState(inputText);
-    this.refs.addItemForm.reset();
+    this.refs.activityForm.reset();
   },
-  renderItem : function(item, key) {
-    var lexicalThis = this;
-    console.log("inside renderItem. item:");
-    console.log(item);
-    console.log("this.props");
-    console.log(this.props);
-    //console.log(item[index].text);
-    //return (<li key={'listview-' + item.kind + index}>{item.text}</li>) // plus other stuff
+  renderActivity : function(item,key) {
+    var activities = this.props.activities;
+    console.log('\n\n\n\n\n\ninside renderActivities');
     return (
-      <li key={key}>
-        <span className="activity-text">{item.text}</span>
-        <a href="#" onClick={ function() {return}} className="start-pomodoro"> Start </a>
-        {/*
-        <a href="#" onClick={ function(event) {
-            this.props.deleteItem[index];
-        }.bind(null,this)} className="delete-link"> x </a>
-        */}
-        <a href="#" onClick={ function(event, another) {
-          console.log('pushed button');
-          lexicalThis.props.deleteItem(key);
-        }} className="delete-link"> x </a>
-      </li>
-    ) // plus other stuff
+      <div>
+        <li key={key}>
+          key:{key}, item: {item}
+        </li>
+      </div>
+    )
   },
   render : function() {
+    var activities = this.props.activities;
     return (
       <div>
         <ol className='activities-ol'>
-          {Object.keys(this.props.data).map(
-            function(key) {
-              return this.renderItem(this.props.data[key],key);
-            }.bind(this)
-          )}
+          {/*
+          {Object.keys(activities).map(this.renderActivity) }
+            */}
+          {Object.keys(activities).map(this.renderActivity) }
         </ol>
-        <form onSubmit={this.createItem} ref="addItemForm" className='form-inline'>
-          <input ref="inputText" type='text' placeholder="ex. Play piano" className="form-control"/>
-          <button type='submit' className='btn btn-default'>Add</button>
+        <form
+          ref='activityForm'
+          onSubmit={this.createActivity}
+          className='form-inline'
+        >
+          <input
+            ref='name'
+            onChange={this.props.updateActivityInput}
+            type='text'
+            value={this.props.activityInput}
+            className='form-control'
+          />
+          {/*
+          <button className='btn btn-default'>(+) task</button>
+          */}
+          <button disabled={this.props.activityInput.length===0} className='btn btn-default'>(+) task</button>
         </form>
       </div>
     )
   },
 });
 
-ReactDOM.render(<App/>, document.querySelector(".container"));
+
+ReactDOM.render(
+  <App />,
+  document.querySelector(".container")
+);

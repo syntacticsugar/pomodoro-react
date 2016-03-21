@@ -19,40 +19,6 @@ body
     &.activities-ol
       font-family "inconsolata", "monaco", "courier new", monospace
 
-  .fullscreen-mid-pomodoro
-    padding 0 1em
-    position fixed
-    top 0
-    left 0
-    width 100%
-    height 100%
-    background-color black
-    .elapsed
-      font-size 4em
-      line-height 80%
-      &:last-child
-
-  .timer-wrapper
-    margin 0 auto
-
-  span
-    &.seconds
-      font-size 0.5em
-
-  a
-    &.delete-link
-      margin 0 1em
-
-  .distractions-wrapper
-    margin-top 2em
-    ol
-      &.distractions-ol
-        li
-          font-family "inconsolata", "monaco", "courier new", monospace
-          color rgba(128,128,128,0.4)
-          &:hover
-            color rgba(128,128,128,0.6)
-
   input
     &.form-control
       height 1.4em
@@ -62,3 +28,48 @@ body
       color chartreuse
       font-size 1.2em
       border-bottom 1px solid dimgray
+
+  .fullscreen-mid-pomodoro
+    padding 0 1em
+    position fixed
+    top 0
+    left 0
+    width 100%
+    height 100%
+    background-color rgba(0,0,0,0.8)
+    .elapsed
+      font-size 4em
+      line-height 80%
+
+  .timer-wrapper
+    margin 0 auto
+
+  span
+    &.seconds
+      font-size 0.5em
+    &.activity-key
+      margin: 0 0.5em
+      font-size: 0.8em
+      color: dimgray
+    &.activity-text
+      text-transform uppercase
+      font-weight bold
+  a
+    &.delete-link
+      margin 0 1em
+  a
+    &.start-pomodoro
+      border-bottom 1px solid thistle
+      margin 0 1em
+      text-transform uppercase
+
+  .distractions-wrapper
+    margin-top 2em
+    ol
+      &.distractions-ol
+        li
+          font-family "inconsolata", "monaco", "courier new", monospace
+          color rgba(128,128,128,0.4)
+
+          &:hover
+            color rgba(128,128,128,0.6)
