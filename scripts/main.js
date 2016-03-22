@@ -16,7 +16,7 @@ var App = React.createClass({
   },
   // state has been updated
   componentDidUpdate : function() {
-    console.log("componentDidUpdate.")
+    //console.log("componentDidUpdate.")
   },
   // updateActivityInput is a callback for the onChange event listener
   updateActivityInput : function(event) {
@@ -25,7 +25,10 @@ var App = React.createClass({
   addActivity : function(activity) {
     var timestamp = (new Date).getTime();
     this.state.activities['activity-' + timestamp] = activity;
-    this.setState({ activities : this.state.activities });
+    this.setState({
+      activities : this.state.activities,
+      activityInput : ""
+    });
   },
   deleteActivity : function(index) {
     // prevent refresh
@@ -41,36 +44,6 @@ var App = React.createClass({
     this.setState({
       activities : this.state.activities,
     })
-  },
-  renderActivities : function() {
-    var allActivities = this.state.activities;
-    var lexicalThis = this;
-
-    // return the new array, without the 'return' keyword,
-    // getActivities would only hold the value;
-    return allActivities.map( function(element,index) {
-      // debugger;
-      return (
-        // return an ARRAY of DOM elements
-        <li key={index}>
-          {element}
-            <a
-              className="delete-link"
-              onClick={ function(event) {
-                console.log(event);
-                lexicalThis.deleteActivity(index)}
-              }
-            href="#"
-            >
-            Delete
-            </a>
-        </li>
-      )
-      // without `bind`, `this`===allActivities, according to Giorgio
-      // actually, debugging `this` didn't return allActivities!
-      // oh noes... Giorgio, why have you forsaken me
-    //}.bind(this)); // now the `this` refers to <App/>, bc renderActivities is a METHOD
-    });
   },
   render : function(){
     return (
@@ -101,6 +74,7 @@ var Activities = React.createClass({
       distractions : {},
       // forgot what this part is for:
       timesActivityWasCompleted : [],
+      submitTime: (new Date().getTime()).toString(),
     };
     this.props.addActivity(activity);
     this.refs.activityForm.reset();
@@ -113,6 +87,10 @@ var Activities = React.createClass({
         <li key={key}>
           <span className="activity-key">key: {key}</span>
           <span className="activity-text">{item.text}</span>
+          <span className="activity-delete">
+            <a href='#' onClick={ function() {this.props.deleteActivity(key)}.bind(this)}>X </a>
+          </span>
+
         </li>
       </div>
     )
