@@ -1,6 +1,7 @@
 'use strict'
 
 import React from 'react';
+//import Activities from '../main';
 
 var Timer = React.createClass({
   getInitialState : function() {
