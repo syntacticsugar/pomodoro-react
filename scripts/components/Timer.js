@@ -23,7 +23,8 @@ var Timer = React.createClass({
     this.setState({
       initializedAt : Math.floor((new Date().getTime())/1000),
     });
-    this.props.updateActivity(this.props.activityKey,'status','in-progress');
+
+    this.props.updateActivityProperty(this.props.activityKey,'status','in-progress');
     this.startCounting();
   },
   startCounting : function() {
@@ -111,13 +112,16 @@ var Timer = React.createClass({
     var totalElapsed = this.state.totalElapsed;
     var prettyTime = this.prettyFormatSeconds(totalElapsed);
     var activities = this.props.activities;
+    var activityKey = this.props.activityKey;
 
     // console.log('inside render, totalElapsed and pretty');
     //console.log(totalElapsed);
     //console.log(prettyTime);
+    console.log('\n\n\n\n\n INSIDE RENDER:');
     console.log('activities:');
     console.log(activities);
-    console.log('key');
+    console.log('activities[activityKey]:');
+    console.log(activities[activityKey]);
     // console.log(key);
     // first time running a Pomodoro session
     if (!this.state.isRunning && this.state.totalElapsed === null) {

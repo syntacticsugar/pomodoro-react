@@ -4,8 +4,8 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 
 //import {Timer} from "./components/timer.jsx";
-var Timer = require("./components/timer.js");
-var Distractions = require("./components/distractions.js");
+var Timer = require("./components/Timer.js");
+var Distractions = require("./components/Distractions.js");
 
 var App = React.createClass({
   getInitialState : function() {
@@ -41,7 +41,7 @@ var App = React.createClass({
   updateActivityProperty : function(key,propertyName,value) {
     this.state.activities[key][propertyName] = value;
     this.setState({ activities : this.state.activities });
-    alert('inside updateActivityProperty');
+    console.log('inside updateActivityProperty in main.js');
   },
   markDoneActivity : function(key) {
     this.state.activities[key].status = "done";
@@ -53,6 +53,7 @@ var App = React.createClass({
   render : function(){
     return (
       <div>
+        <h1>Pom-a-GoGo</h1>
         <h4>Enter a task or Pomodoro activity, yo</h4>
         <Activities
             activities = {this.state.activities}
@@ -62,8 +63,13 @@ var App = React.createClass({
             addActivity={this.addActivity}
             deleteActivity={this.deleteActivity}
         />
-        <p><em>so far you wrote:</em> <span className='text-muted'>({this.state.activityInput.length}):{this.state.activityInput}</span></p>
-        <Timer />
+        <span><em>so far you wrote:</em> <span className='text-muted'>({this.state.activityInput.length}):{this.state.activityInput}</span></span>
+        <br/><br/><br/>
+        <h2>Standalone Timer:</h2>
+        <Timer
+            activities={this.state.activities}
+            updateActivityProperty={this.updateActivityProperty}
+        />
       </div>
     )
   }
@@ -86,13 +92,13 @@ var Activities = React.createClass({
     this.refs.activityForm.reset();
   },
   renderActivity : function(item,key) {
-    var activities = this.props.activities;
     console.log('\n\n\n\n\n\ninside renderActivity');
     return (
       <div>
         <li key={key}>
           <span className="activity-key">key: {key}</span>
-          <span className="activity-text">{item.text}</span>
+          <span className="activity-text">{item.text} </span>
+          <span className="activity-text">({item.status})</span>
           <span className="activity-delete">
             <a href='#' onClick={ function() {this.props.deleteActivity(key)}.bind(this)}>X </a>
           </span>
