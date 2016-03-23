@@ -127,6 +127,7 @@ var Timer = React.createClass({
     if (!this.state.isRunning && this.state.totalElapsed === null) {
       return (
         <div className="">
+          <h1>{this.props.activities[activityKey].text}</h1>
           <button
             onClick={this.initializePomodoro}
             className='btn btn-primary pom-button start-pomodoro'>begin Pomodoro</button>

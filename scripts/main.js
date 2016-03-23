@@ -11,7 +11,7 @@ var App = React.createClass({
   getInitialState : function() {
     return {
       activityInput : "",
-      activities : [],
+      activities : {},
     }
   },
   // state has been updated
