@@ -66,10 +66,6 @@ var App = React.createClass({
         <span><em>so far you wrote:</em> <span className='text-muted'>({this.state.activityInput.length}):{this.state.activityInput}</span></span>
         <br/><br/><br/>
         <h2>Standalone Timer:</h2>
-        <Timer
-            activities={this.state.activities}
-            updateActivityProperty={this.updateActivityProperty}
-        />
       </div>
     )
   }
@@ -140,7 +136,12 @@ var Activities = React.createClass({
           {/*
           <button className='btn btn-default'>(+) task</button>
           */}
-          <button disabled={this.props.activityInput.length===0} className='btn btn-default'>(+) task</button>
+          <button
+            disabled={this.props.activityInput.length===0}
+            className='btn btn-default'
+            type='submit'
+            >(+) task
+          </button>
         </form>
       </div>
     )
