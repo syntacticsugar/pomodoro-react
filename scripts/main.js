@@ -41,7 +41,7 @@ var App = React.createClass({
   updateActivityProperty : function(key,propertyName,value) {
     this.state.activities[key][propertyName] = value;
     this.setState({ activities : this.state.activities });
-    alert('inside last line updateActivityProperty');
+    alert('inside updateActivityProperty');
   },
   markDoneActivity : function(key) {
     this.state.activities[key].status = "done";
@@ -98,7 +98,7 @@ var Activities = React.createClass({
           </span>
           <span className="activity-start">
             <Timer
-              key={key}
+              activityKey={key}
               activities={this.props.activities}
               updateActivityProperty={this.props.updateActivityProperty}
             />
