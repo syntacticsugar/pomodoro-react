@@ -38,6 +38,11 @@ var App = React.createClass({
       activities : this.state.activities,
     })
   },
+  updateActivityProperty : function(key,propertyName,value) {
+    this.state.activities[key][propertyName] = value;
+    this.setState({ activities : this.state.activities });
+    alert('inside last line updateActivityProperty');
+  },
   markDoneActivity : function(key) {
     this.state.activities[key].status = "done";
     this.state.activities[key].isFinished = true;
@@ -53,6 +58,7 @@ var App = React.createClass({
             activities = {this.state.activities}
             activityInput = {this.state.activityInput}
             updateActivityInput={this.updateActivityInput}
+            updateActivityProperty={this.updateActivityProperty}
             addActivity={this.addActivity}
             deleteActivity={this.deleteActivity}
         />
@@ -89,6 +95,13 @@ var Activities = React.createClass({
           <span className="activity-text">{item.text}</span>
           <span className="activity-delete">
             <a href='#' onClick={ function() {this.props.deleteActivity(key)}.bind(this)}>X </a>
+          </span>
+          <span className="activity-start">
+            <Timer
+              key={key}
+              activities={this.props.activities}
+              updateActivityProperty={this.props.updateActivityProperty}
+            />
           </span>
 
         </li>

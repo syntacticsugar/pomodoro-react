@@ -1,3 +1,5 @@
+'use strict'
+
 import React from 'react';
 
 var Timer = React.createClass({
@@ -21,7 +23,7 @@ var Timer = React.createClass({
     this.setState({
       initializedAt : Math.floor((new Date().getTime())/1000),
     });
-    this.props.updateActivity(this.props.myKey,'status','in-progress');
+    this.props.updateActivityProperty(this.props.key,'status','in-progress');
     this.startCounting();
   },
   startCounting : function() {
