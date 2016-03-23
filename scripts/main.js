@@ -90,7 +90,6 @@ var Activities = React.createClass({
   renderActivity : function(item,key) {
     console.log('\n\n\n\n\n\ninside renderActivity');
     return (
-      <div>
         <li key={key}>
           <span className="activity-key">key: {key}</span>
           <span className="activity-text">{item.text} </span>
@@ -107,7 +106,6 @@ var Activities = React.createClass({
           </span>
 
         </li>
-      </div>
     )
   },
   render : function() {

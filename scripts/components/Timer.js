@@ -114,6 +114,7 @@ var Timer = React.createClass({
     var prettyTime = this.prettyFormatSeconds(totalElapsed);
     var activities = this.props.activities;
     var activityKey = this.props.activityKey;
+    var currentActivityName = activities[activityKey].text;
 
     // console.log('inside render, totalElapsed and pretty');
     //console.log(totalElapsed);
@@ -121,18 +122,15 @@ var Timer = React.createClass({
     console.log('\n\n\n\n\n INSIDE RENDER:');
     console.log('activities:');
     console.log(activities);
-    console.log('activities[activityKey]:');
-    console.log(activities[activityKey]);
+    console.log('activities[activityKey].text:');
+    console.log(currentActivityName);
+    console.log('props');
+    console.log(this.props);
     // console.log(key);
     // first time running a Pomodoro session
     if (!this.state.isRunning && this.state.totalElapsed === null) {
       return (
         <div className="">
-          <h1>
-            {/*
-            {this.props.activities[activityKey]}
-            */}
-          </h1>
           <button
             onClick={this.initializePomodoro}
             className='btn btn-primary pom-button start-pomodoro'>begin Pomodoro</button>
@@ -144,6 +142,9 @@ var Timer = React.createClass({
     // ELSE, WE ARE IN THE MIDDLE OF A TIMED SESSION
     return (
       <div className="row fullscreen-mid-pomodoro">
+        <h1 className='current-activity'>
+          {currentActivityName}
+        </h1>
         <div className='col-xs-12 col-sm-10 col-md-8 timer-wrapper'>
           <button
             onClick={this.interruptCounting}
