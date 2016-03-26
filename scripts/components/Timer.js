@@ -14,7 +14,7 @@ var Timer = React.createClass({
       isRunning : false,
       //timeAtPause : null,
       //singlePomodoroInSeconds : 25*60, // (1500)
-      singlePomodoroInSeconds : 60*25,
+      singlePomodoroInSeconds : 9,
       fiveSeconds : 5,
     }
   },
@@ -142,10 +142,10 @@ var Timer = React.createClass({
     // ELSE, WE ARE IN THE MIDDLE OF A TIMED SESSION
     return (
       <div className="row fullscreen-mid-pomodoro">
-        <h1 className='current-activity'>
+        <div className='current-activity col-xs-12 col-sm-10 col-md-8 center-block'>
           {currentActivityName}
-        </h1>
-        <div className='col-xs-12 col-sm-10 col-md-8 timer-wrapper'>
+        </div>
+        <div className='col-xs-12 col-sm-10 col-md-8 timer-wrapper center-block'>
           <button
             onClick={this.interruptCounting}
             className='btn btn-default pom-button start-pomodoro'>pause</button>
@@ -155,7 +155,9 @@ var Timer = React.createClass({
           <button
             onClick={this.clearEverything}
             className='btn btn-warning pom-button start-pomodoro'>STOP/reset</button>
-          <p>total elapsedTime: <br/><span className="elapsed">{prettyTime}</span></p>
+          <section className='elapsed-counter'>
+            <p>total elapsedTime: <br/><span className="elapsed">{prettyTime}</span></p>
+          </section>
         </div>
         {/*
           <Distractions className="row" />

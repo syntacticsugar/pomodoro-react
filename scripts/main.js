@@ -6,6 +6,7 @@ var ReactDOM = require('react-dom');
 //import {Timer} from "./components/timer.jsx";
 var Timer = require("./components/Timer.js");
 var Distractions = require("./components/Distractions.js");
+import FontAwesomeExample from './components/FontAwesomeExample';
 
 var App = React.createClass({
   getInitialState : function() {
@@ -124,13 +125,16 @@ var Activities = React.createClass({
           onSubmit={this.createActivity}
           className='form-inline'
         >
-          <input
-            ref='name'
-            onChange={this.props.updateActivityInput}
-            type='text'
-            value={this.props.activityInput}
-            className='form-control'
-          />
+          <div className="input-group">
+            <span className="input-group-addon"><i className="fa fa-pencil fa-fw"></i></span>
+            <input
+                ref='name'
+                onChange={this.props.updateActivityInput}
+                type='text'
+                value={this.props.activityInput}
+                className="form-control"
+            />
+          </div>
           {/*
           <button className='btn btn-default'>(+) task</button>
           */}
