@@ -14,7 +14,7 @@ var Timer = React.createClass({
       isRunning : false,
       //timeAtPause : null,
       //singlePomodoroInSeconds : 25*60, // (1500)
-      singlePomodoroInSeconds : 9,
+      singlePomodoroInSeconds : 5,
       fiveSeconds : 5,
     }
   },
@@ -76,7 +76,6 @@ var Timer = React.createClass({
     }
   },
   prettyFormatSeconds : function(seconds) {
-
     var minutes, leftoverSecs, results;
 
     if (seconds !== null) {
@@ -107,7 +106,8 @@ var Timer = React.createClass({
   },
   finishPomodoro : function() {
     this.interruptCounting();
-
+    //this.props.updateActivityProperty(this.props.activityKey,'status','done');
+    this.props.markDoneActivity(this.props.activityKey);
   },
   render : function() {
     var totalElapsed = this.state.totalElapsed;
@@ -143,7 +143,7 @@ var Timer = React.createClass({
     return (
       <div className="row fullscreen-mid-pomodoro">
         <div className='current-activity col-xs-12 col-sm-10 col-md-8 center-block'>
-          {currentActivityName}
+          {currentActivityName} : {activities[activityKey].status}
         </div>
         <div className='col-xs-12 col-sm-10 col-md-8 timer-wrapper center-block'>
           <button

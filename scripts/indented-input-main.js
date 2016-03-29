@@ -6,15 +6,12 @@ var ReactDOM = require('react-dom');
 //import {Timer} from "./components/timer.jsx";
 var Timer = require("./components/Timer.js");
 var Distractions = require("./components/Distractions.js");
-import FontAwesomeExample from './components/FontAwesomeExample';
-import Done from './components/Done';
 
 var App = React.createClass({
   getInitialState : function() {
     return {
       activityInput : "",
       activities : {},
-      doneActivityKeys : [],
     }
   },
   // state has been updated
@@ -49,10 +46,8 @@ var App = React.createClass({
   markDoneActivity : function(key) {
     this.state.activities[key].status = "done";
     this.state.activities[key].isFinished = true;
-    this.state.doneActivityKeys.push(this.state.activities[key]);
     this.setState({
       activities : this.state.activities,
-      doneActivityKeys : this.state.doneActivityKeys,
     })
   },
   render : function(){
@@ -60,21 +55,17 @@ var App = React.createClass({
       <div>
         <h1>Pom-a-GoGo</h1>
         <h4>Enter a task or Pomodoro activity, yo</h4>
-        <span><em>so far you wrote:</em> <span className='text-muted'>({this.state.activityInput.length}):{this.state.activityInput}</span></span>
         <Activities
             activities = {this.state.activities}
             activityInput = {this.state.activityInput}
             updateActivityInput={this.updateActivityInput}
             updateActivityProperty={this.updateActivityProperty}
-            markDoneActivity={this.markDoneActivity}
             addActivity={this.addActivity}
             deleteActivity={this.deleteActivity}
         />
-        <Done
-            activities={this.state.activities}
-            doneActivityKeys={this.state.doneActivityKeys}
-        />
+        <span><em>so far you wrote:</em> <span className='text-muted'>({this.state.activityInput.length}):{this.state.activityInput}</span></span>
         <br/><br/><br/>
+        <h2>Standalone Timer:</h2>
       </div>
     )
   }
@@ -104,16 +95,12 @@ var Activities = React.createClass({
           <span className="activity-text">{item.text} </span>
           <span className="activity-text">({item.status})</span>
           <span className="activity-delete">
-            <a href='#' onClick={ function() {this.props.deleteActivity(key)}.bind(this)}>
-              <i className="fa fa-trash-o"></i>
-              delete
-            </a>
+            <a href='#' onClick={ function() {this.props.deleteActivity(key)}.bind(this)}>X </a>
           </span>
           <span className="activity-start">
             <Timer
               activityKey={key}
               activities={this.props.activities}
-              markDoneActivity={this.props.markDoneActivity}
               updateActivityProperty={this.props.updateActivityProperty}
             />
           </span>
@@ -125,20 +112,29 @@ var Activities = React.createClass({
     var activities = this.props.activities;
     return (
       <div>
+        <ol className='activities-ol'>
+          {Object.keys(activities).map(
+            function(key) {
+              return this.renderActivity(activities[key],key);
+            }.bind(this)
+          )}
+        </ol>
         <form
           ref='activityForm'
           onSubmit={this.createActivity}
           className='form-inline'
         >
-          <div className="input-group">
-            <span className="input-group-addon"><i className="fa fa-pencil fa-fw"></i></span>
-            <input
+          <div class='input-group'>
+              <span className="input-group-addon">
+                <i className="fa fa-pencil-o fa-fw"></i>
+              </span>
+              <input
                 ref='name'
                 onChange={this.props.updateActivityInput}
                 type='text'
                 value={this.props.activityInput}
-                className="form-control"
-            />
+                className='form-control'
+              />
           </div>
           {/*
           <button className='btn btn-default'>(+) task</button>
@@ -150,13 +146,8 @@ var Activities = React.createClass({
             >(+) task
           </button>
         </form>
-        <ol className='activities-ol'>
-          {Object.keys(activities).map(
-            function(key) {
-              return this.renderActivity(activities[key],key);
-            }.bind(this)
-          )}
-        </ol>
+        <div className='font-awesome-wrapper'>
+        </div>
       </div>
     )
   },
@@ -167,3 +158,9 @@ ReactDOM.render(
   <App />,
   document.querySelector(".container")
 );
+
+    <li><a href="#"><i className="fa fa-ban fa-fw"></i> Ban</a></li>
+    <li className="divider"></li>
+    <li><a href="#"><i className="i"></i> Make admin</a></li>
+  </ul>
+</div>
