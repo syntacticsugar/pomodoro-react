@@ -19,8 +19,6 @@ var Timer = React.createClass({
     }
   },
   initializePomodoro : function(event) {
-    console.log('initialize pomodoro');
-    console.log(this.props);
     this.setState({
       initializedAt : Math.floor((new Date().getTime())/1000),
     });
@@ -55,8 +53,8 @@ var Timer = React.createClass({
     //if (this.state.totalElapsed > 1) {
     //if (totalElapsed !== null && totalElapsed < singlePomodoroInSeconds) {
     if (totalElapsed < singlePomodoroInSeconds) {
-      console.log("inside first `if` of countTime, totalElapsed");
-      console.log(totalElapsed);
+      //console.log("inside first `if` of countTime, totalElapsed");
+      //console.log(totalElapsed);
       setTimeout( function() {
         if (this.state.isRunning) {
           var currentTime = Math.floor((new Date().getTime())/1000);
@@ -74,6 +72,11 @@ var Timer = React.createClass({
     } else if (totalElapsed >= singlePomodoroInSeconds) {
       this.finishPomodoro();
     }
+  },
+  finishPomodoro : function() {
+    this.interruptCounting();
+    //this.props.updateActivityProperty(this.props.activityKey,'status','done');
+    this.props.markDoneActivity(this.props.activityKey);
   },
   prettyFormatSeconds : function(seconds) {
     var minutes, leftoverSecs, results;
@@ -104,11 +107,6 @@ var Timer = React.createClass({
     }
     return results;
   },
-  finishPomodoro : function() {
-    this.interruptCounting();
-    //this.props.updateActivityProperty(this.props.activityKey,'status','done');
-    this.props.markDoneActivity(this.props.activityKey);
-  },
   render : function() {
     var totalElapsed = this.state.totalElapsed;
     var prettyTime = this.prettyFormatSeconds(totalElapsed);
@@ -116,26 +114,18 @@ var Timer = React.createClass({
     var activityKey = this.props.activityKey;
     var currentActivityName = activities[activityKey].text;
 
-    // console.log('inside render, totalElapsed and pretty');
-    //console.log(totalElapsed);
-    //console.log(prettyTime);
-    console.log('\n\n\n\n\n INSIDE RENDER:');
-    console.log('activities:');
-    console.log(activities);
-    console.log('activities[activityKey].text:');
-    console.log(currentActivityName);
-    console.log('props');
-    console.log(this.props);
-    // console.log(key);
-    // first time running a Pomodoro session
+      // first time running a Pomodoro session
     if (!this.state.isRunning && this.state.totalElapsed === null) {
       return (
         <div className="">
+          {/*
           <button
             onClick={this.initializePomodoro}
             className='btn btn-primary pom-button start-pomodoro'>begin Pomodoro</button>
-          {/*<p>total elapsedTime: {this.prettyFormatSeconds(totalElapsed)}</p>*/}
-          <p>total elapsedTime: {totalElapsed}</p>
+            */}
+          <a href="#"
+            onClick={this.initializePomodoro}
+            className='start-pomodoro'>begin Pomodoro</a>
         </div>
     )
   } else {

@@ -4,9 +4,12 @@ import React from 'react';
 
 var Done = React.createClass({
   render : function() {
-    var doneActivityKeys = this.props.doneActivityKeys;
-    var nDone = Object.keys(doneActivityKeys).length;
+    var done = this.props.done;
+    var activities = this.props.activities;
 
+    var nDone = Object.keys(done).length;
+
+    //debugger;
     if (nDone >= 1) {
       return (
         <div className="row">
@@ -14,6 +17,13 @@ var Done = React.createClass({
             <h2>Done</h2>
             <h4>Props to you, these are things you've finished:</h4>
             <p>{nDone} are finished.</p>
+            <ol>
+              {Object.keys(done).map(
+                function(index) {
+                  return <li key={index} index={index}>index={index}.<br/>activities[doneKey].text:{activities[index].text}</li>
+                }
+              )}
+            </ol>
           </div>
         </div>
       )

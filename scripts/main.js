@@ -14,7 +14,8 @@ var App = React.createClass({
     return {
       activityInput : "",
       activities : {},
-      doneActivityKeys : [],
+      //done : []
+      done : {}
     }
   },
   // state has been updated
@@ -44,16 +45,24 @@ var App = React.createClass({
   updateActivityProperty : function(key,propertyName,value) {
     this.state.activities[key][propertyName] = value;
     this.setState({ activities : this.state.activities });
-    console.log('inside updateActivityProperty in main.js');
+    //console.log('inside updateActivityProperty in main.js');
   },
   markDoneActivity : function(key) {
     this.state.activities[key].status = "done";
     this.state.activities[key].isFinished = true;
-    this.state.doneActivityKeys.push(this.state.activities[key]);
+    //this.state.done.push(this.state.activities[key]);
+    console.log('try to update "done":');
+    console.log(this.state.done);
+    console.log(key);
+    this.state.done[key] = key;
+    console.log(this.state.done);
     this.setState({
       activities : this.state.activities,
-      doneActivityKeys : this.state.doneActivityKeys,
-    })
+      //done : this.state.done,
+    });
+    this.setState({done : this.state.done});
+    //alert("key:" + key);
+    //alert(key);
   },
   render : function(){
     return (
@@ -72,7 +81,7 @@ var App = React.createClass({
         />
         <Done
             activities={this.state.activities}
-            doneActivityKeys={this.state.doneActivityKeys}
+            done={this.state.done}
         />
         <br/><br/><br/>
       </div>
@@ -97,10 +106,12 @@ var Activities = React.createClass({
     this.refs.activityForm.reset();
   },
   renderActivity : function(item,key) {
-    console.log('\n\n\n\n\n\ninside renderActivity');
+    //console.log('\n\n\n\n\n\ninside renderActivity');
     return (
         <li key={key}>
+          {/*
           <span className="activity-key">key: {key}</span>
+          */}
           <span className="activity-text">{item.text} </span>
           <span className="activity-text">({item.status})</span>
           <span className="activity-delete">
@@ -117,6 +128,7 @@ var Activities = React.createClass({
               updateActivityProperty={this.props.updateActivityProperty}
             />
           </span>
+
 
         </li>
     )
