@@ -14,7 +14,7 @@ var Timer = React.createClass({
       isRunning : false,
       //timeAtPause : null,
       //singlePomodoroInSeconds : 25*60, // (1500)
-      singlePomodoroInSeconds : 5,
+      singlePomodoroInSeconds : 9,
       fiveSeconds : 5,
     }
   },
@@ -24,14 +24,18 @@ var Timer = React.createClass({
     });
 
     this.props.updateActivityProperty(this.props.activityKey,'status','in-progress');
-    this.startCounting();
+    this.startOrResumeCounting();
   },
-  startCounting : function() {
-    this.setState({
-      lastCountedAt : Math.floor((new Date().getTime())/1000),
-      isRunning : true
-    });
-    this.countTime();
+  startOrResumeCounting : function() {
+    if (this.state.isRunning === false) {
+      this.setState({
+        lastCountedAt : Math.floor((new Date().getTime())/1000),
+        isRunning : true
+      });
+      this.countTime();
+    } else {
+      console.log("do nothing");
+    }
   },
   interruptCounting : function(event) {
     this.setState({
@@ -140,7 +144,7 @@ var Timer = React.createClass({
             onClick={this.interruptCounting}
             className='btn btn-default pom-button start-pomodoro'>pause</button>
           <button
-            onClick={this.startCounting}
+            onClick={this.startOrResumeCounting}
             className='btn btn-primary pom-button start-pomodoro'>resume</button>
           <button
             onClick={this.clearEverything}

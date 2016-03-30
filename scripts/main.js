@@ -107,31 +107,32 @@ var Activities = React.createClass({
   },
   renderActivity : function(item,key) {
     //console.log('\n\n\n\n\n\ninside renderActivity');
-    return (
-        <li key={key}>
-          {/*
-          <span className="activity-key">key: {key}</span>
-          */}
-          <span className="activity-text">{item.text} </span>
-          <span className="activity-text">({item.status})</span>
-          <span className="activity-delete">
-            <a href='#' onClick={ function() {this.props.deleteActivity(key)}.bind(this)}>
-              <i className="fa fa-trash-o"></i>
-              delete
-            </a>
-          </span>
-          <span className="activity-start">
-            <Timer
-              activityKey={key}
-              activities={this.props.activities}
-              markDoneActivity={this.props.markDoneActivity}
-              updateActivityProperty={this.props.updateActivityProperty}
-            />
-          </span>
+    if (item.status != 'done') {
+      return (
+          <li key={key}>
+            {/*
+            <span className="activity-key">key: {key}</span>
+            */}
+            <span className="activity-text">{item.text} </span>
+            <span className="activity-text">({item.status})</span>
+            <span className="activity-delete">
+              <a href='#' onClick={ function() {this.props.deleteActivity(key)}.bind(this)}>
+                <i className="fa fa-trash-o"></i>
+                delete
+              </a>
+            </span>
+            <span className="activity-start">
+              <Timer
+                activityKey={key}
+                activities={this.props.activities}
+                markDoneActivity={this.props.markDoneActivity}
+                updateActivityProperty={this.props.updateActivityProperty}
+              />
+            </span>
+          </li>
+      )
+    }
 
-
-        </li>
-    )
   },
   render : function() {
     var activities = this.props.activities;

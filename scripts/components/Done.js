@@ -20,7 +20,15 @@ var Done = React.createClass({
             <ol>
               {Object.keys(done).map(
                 function(index) {
-                  return <li key={index} index={index}>index={index}.<br/>activities[doneKey].text:{activities[index].text}</li>
+                  return (
+                    <li
+                      key={index}
+                      index={index}
+                      className=""
+                    >
+                      {activities[index].text}
+                    </li>
+                  )
                 }
               )}
             </ol>
