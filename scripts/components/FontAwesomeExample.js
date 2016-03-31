@@ -11,7 +11,11 @@ var FontAwesomeExample = React.createClass({
           <i className="fa fa-cog"></i> Settings</a>
 
           <a className="btn btn-lg btn-success" href="#">
-          <i className="fa fa-flag fa-2x pull-left"></i> Font Awesome<br/>Version 4.5.0</a>
+          <i className="fa fa-play fa-2x pull-left"></i> play</a>
+          <a className="btn btn-lg btn-success" href="#">
+          <i className="fa fa-pause fa-2x pull-left"></i> pause</a>
+          <a className="btn btn-lg btn-success" href="#">
+          <i className="fa fa-stop fa-2x pull-left"></i> close</a>
 
           <div className="btn-group">
             <a className="btn btn-default" href="#"><i className="fa fa-align-left"></i></a>

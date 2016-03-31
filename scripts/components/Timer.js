@@ -1,6 +1,7 @@
 'use strict'
 
 import React from 'react';
+import FontAwesomeExample from './FontAwesomeExample';
 //import Activities from '../main';
 
 var Timer = React.createClass({
@@ -129,7 +130,7 @@ var Timer = React.createClass({
             */}
           <a href="#"
             onClick={this.initializePomodoro}
-            className='start-pomodoro'>begin Pomodoro</a>
+            className='start-pomodoro'><i className="fa fa-play-circle-o fa-fw"></i></a>
         </div>
     )
   } else {
@@ -140,19 +141,28 @@ var Timer = React.createClass({
           {currentActivityName} : {activities[activityKey].status}
         </div>
         <div className='col-xs-12 col-sm-10 col-md-8 timer-wrapper center-block'>
-          <button
+          <a
+            href=""
             onClick={this.interruptCounting}
-            className='btn btn-default pom-button start-pomodoro'>pause</button>
-          <button
+            className='btn btn-lg pom-button start-pomodoro'>
+            <i className="fa fa-pause fa-2x pull-left"></i> </a>
+          <a
+            href=""
             onClick={this.startOrResumeCounting}
-            className='btn btn-primary pom-button start-pomodoro'>resume</button>
-          <button
+            className='btn btn-lg pom-button start-pomodoro'>
+            <i className="fa fa-play fa-2x pull-left"></i> </a>
+          <a
+            href=""
             onClick={this.clearEverything}
-            className='btn btn-warning pom-button start-pomodoro'>STOP/reset</button>
+            className='btn btn-lg pom-button start-pomodoro'>
+            <i className="fa fa-stop fa-2x pull-left"></i> </a>
           <section className='elapsed-counter'>
             <p>total elapsedTime: <br/><span className="elapsed">{prettyTime}</span></p>
           </section>
         </div>
+        {/*
+        <FontAwesomeExample />
+          */}
         {/*
           <Distractions className="row" />
           */}

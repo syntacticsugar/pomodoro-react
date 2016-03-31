@@ -17,7 +17,7 @@ var Done = React.createClass({
             <h2>Done</h2>
             <h4>Props to you, these are things you've finished:</h4>
             <p>{nDone} are finished.</p>
-            <ol>
+            <ol className="done-ol">
               {Object.keys(done).map(
                 function(index) {
                   return (

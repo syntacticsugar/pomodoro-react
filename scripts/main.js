@@ -67,7 +67,7 @@ var App = React.createClass({
   render : function(){
     return (
       <div>
-        <h1>Pom-a-GoGo</h1>
+        <h1 className="logo"><img src="images/logo.png" /></h1>
         <h4>Enter a task or Pomodoro activity, yo</h4>
         <span><em>so far you wrote:</em> <span className='text-muted'>({this.state.activityInput.length}):{this.state.activityInput}</span></span>
         <Activities
