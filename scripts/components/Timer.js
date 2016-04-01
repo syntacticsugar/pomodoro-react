@@ -20,6 +20,7 @@ var Timer = React.createClass({
     }
   },
   initializePomodoro : function(event) {
+    event.preventDefault();
     this.setState({
       initializedAt : Math.floor((new Date().getTime())/1000),
     });
@@ -27,7 +28,10 @@ var Timer = React.createClass({
     this.props.updateActivityProperty(this.props.activityKey,'status','in-progress');
     this.startOrResumeCounting();
   },
-  startOrResumeCounting : function() {
+  startOrResumeCounting : function(event) {
+    if (event) {
+      event.preventDefault();
+    }
     if (this.state.isRunning === false) {
       this.setState({
         lastCountedAt : Math.floor((new Date().getTime())/1000),
@@ -39,11 +43,13 @@ var Timer = React.createClass({
     }
   },
   interruptCounting : function(event) {
+    event.preventDefault();
     this.setState({
       isRunning : false
     });
   },
   clearEverything : function(event) {
+    event.preventDefault();
     this.setState( {
       initializedAt : null,
       lastCountedAt : null,
