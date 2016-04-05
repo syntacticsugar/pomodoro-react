@@ -67,9 +67,13 @@ var App = React.createClass({
   render : function(){
     return (
       <div>
-        <h1 className="logo"><img src="images/logo.png" /></h1>
+        <h1 className="logo">
+          <img className="tiny-tomato" src="images/bit-red-tomato-tiny.png" /><img src="images/logo.png" />
+        </h1>
+        {/*
         <h4>Enter a task or Pomodoro activity, yo</h4>
         <span><em>so far you wrote:</em> <span className='text-muted'>({this.state.activityInput.length}):{this.state.activityInput}</span></span>
+        */}
         <Activities
             activities = {this.state.activities}
             activityInput = {this.state.activityInput}
@@ -114,7 +118,7 @@ var Activities = React.createClass({
             <span className="activity-key">key: {key}</span>
             */}
             <span className="activity-text">{item.text} </span>
-            <span className="activity-text">({item.status})</span>
+            <span className="activity-status">({item.status})</span>
             <span className="activity-delete">
               <a href='#' onClick={ function() {this.props.deleteActivity(key)}.bind(this)}>
                 <i className="fa fa-trash-o"></i>
@@ -143,25 +147,27 @@ var Activities = React.createClass({
           onSubmit={this.createActivity}
           className='form-inline'
         >
-          <div className="input-group">
-            <span className="input-group-addon"><i className="fa fa-pencil fa-fw"></i></span>
-            <input
-                ref='name'
-                onChange={this.props.updateActivityInput}
-                type='text'
-                value={this.props.activityInput}
-                className="form-control"
-            />
+          <div className="row">
+            <div className="input-group">
+              <span className="input-group-addon"><i className="fa fa-pencil fa-fw fa-lg"></i></span>
+              <input
+                  ref='name'
+                  onChange={this.props.updateActivityInput}
+                  type='text'
+                  value={this.props.activityInput}
+                  className="form-control input-activity"
+              />
+            </div>
+            {/*
+            <button className='btn btn-default'>(+) task</button>
+            */}
+            <button
+              disabled={this.props.activityInput.length===0}
+              className='btn btn-default submit-task'
+              type='submit'
+              ><i className="fa fa-plus fa-fw fa-lg"></i>
+            </button>
           </div>
-          {/*
-          <button className='btn btn-default'>(+) task</button>
-          */}
-          <button
-            disabled={this.props.activityInput.length===0}
-            className='btn btn-default'
-            type='submit'
-            >(+) task
-          </button>
         </form>
         <ol className='activities-ol'>
           {Object.keys(activities).map(

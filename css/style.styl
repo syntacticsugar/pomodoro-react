@@ -20,12 +20,33 @@ body
   h1
     &.logo
       margin-top 1em
+      img
+        &.tiny-tomato
+          position relative
+          right -1em
 
   ol
     &.activities-ol, &.done-ol
+      margin 1em 0
       font-family "inconsolata", "monaco", "courier new", monospace
 
+  a
+    &.start-pomodoro
+      cursor pointer
+      i
+        &.fa
+          color #8eff11
+          font-size 3em
+          &:hover
+            -webkit-animation neon4 1.5s ease-in-out infinite alternate
+            -moz-animation neon4 1.5s ease-in-out infinite alternate
+            animation neon4 1.5s ease-in-out infinite alternate
   form
+    button
+      &.btn.btn-default.submit-task
+        background rgba(255,255,255,.1)
+        border-radius 0
+        border none
     &.form-inline
       .input-group
         span
@@ -41,7 +62,7 @@ body
             border-radius 0
             padding-left 1.2em
             background-color transparent
-            color chartreuse
+            color #b0f752
             font-size 1.2em
             border-bottom 1px solid dimgray
 
@@ -56,11 +77,11 @@ body
     background-color rgba(0,0,0,0.8)
     .current-activity
       font-family 'roboto condensed'
-      font-size 4.5em
+      font-size 2.5em
       font-weight bold
       color greenyellow
     .elapsed
-      font-size 5em
+      //font-size 5em
       line-height 80%
     section.elapsed-counter
       margin: 1em 0
@@ -72,21 +93,42 @@ body
     &.seconds
       font-size 0.5em
     &.activity-key
-      margin: 0 0.5em
-      font-size: 0.8em
-      color: dimgray
+      margin 0 0.5em
+      font-size 0.8em
+      color dimgray
     &.activity-text
-      text-transform uppercase
+      font-size 1.4em
+      //text-transform uppercase
       font-weight bold
       margin 0 1em;
+    &.activity-status
+      margin 0 1em
+      text-transform italic
+      color dimgray
+      font-size 0.7em
+    &.activity-delete
+      color dimgray
+      i
+        &.fa
+          color dimgray
+          font-size 1.5em
+          margin 0 0.5em
   a
     &.delete-link
       margin 0 1em
-  a
-    &.start-pomodoro
-      border-bottom 1px solid thistle
+  button
+    &.timer-control
+      background-color transparent
+      color white
+      //border-bottom 1px solid thistle
       margin 0 1em
       text-transform uppercase
+      &:active
+        //outline black
+      &:focus, &:active
+        outline none
+        border none
+        color aqua
 
   .distractions-wrapper
     margin-top 2em

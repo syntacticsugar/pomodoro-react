@@ -42,11 +42,14 @@ var Timer = React.createClass({
       console.log("do nothing");
     }
   },
-  interruptCounting : function(event) {
-    event.preventDefault();
+  interruptCounting : function() {
     this.setState({
       isRunning : false
     });
+  },
+  pauseHandler : function(event) {
+    event.preventDefault();
+    this.interruptCounting();
   },
   clearEverything : function(event) {
     event.preventDefault();
@@ -136,7 +139,7 @@ var Timer = React.createClass({
             */}
           <a href="#"
             onClick={this.initializePomodoro}
-            className='start-pomodoro'><i className="fa fa-play-circle-o fa-fw"></i></a>
+            className='start-pomodoro'><i className="fa fa-play fa-fw"></i></a>
         </div>
     )
   } else {
@@ -147,23 +150,23 @@ var Timer = React.createClass({
           {currentActivityName} : {activities[activityKey].status}
         </div>
         <div className='col-xs-12 col-sm-10 col-md-8 timer-wrapper center-block'>
-          <a
-            href=""
-            onClick={this.interruptCounting}
-            className='btn btn-lg pom-button start-pomodoro'>
-            <i className="fa fa-pause fa-2x pull-left"></i> </a>
-          <a
-            href=""
+          <button
+            onClick={this.pauseHandler}
+            className='btn btn-lg timer-control'>
+            <i className="fa fa-pause fa-2x pull-left"></i> </button>
+          <button
             onClick={this.startOrResumeCounting}
-            className='btn btn-lg pom-button start-pomodoro'>
-            <i className="fa fa-play fa-2x pull-left"></i> </a>
-          <a
-            href=""
+            className='btn btn-lg timer-control'>
+            <i className="fa fa-play fa-2x pull-left"></i> </button>
+          <button
             onClick={this.clearEverything}
-            className='btn btn-lg pom-button start-pomodoro'>
-            <i className="fa fa-stop fa-2x pull-left"></i> </a>
+            className='btn btn-lg timer-control'>
+            <i className="fa fa-stop fa-2x pull-left"></i> </button>
           <section className='elapsed-counter'>
-            <p>total elapsedTime: <br/><span className="elapsed">{prettyTime}</span></p>
+            {/*
+            <caption>total elapsedTime: <br/><span className="elapsed">{prettyTime}</span></caption>
+            */}
+            <span className="elapsed">{prettyTime}</span>
           </section>
         </div>
         {/*
