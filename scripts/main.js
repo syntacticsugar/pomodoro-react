@@ -144,7 +144,7 @@ var Activities = React.createClass({
     //console.log('\n\n\n\n\n\ninside renderActivity');
     if (item.status != 'done') {
       return (
-          <li key={key} className="animated slideInLeft">
+          <li key={key} className="">
             <span className='li-activity-wrapper'>
               {/*
               <span className="activity-key">key: {key}</span>
