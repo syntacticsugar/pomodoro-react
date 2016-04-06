@@ -131,7 +131,7 @@ var Timer = React.createClass({
       // first time running a Pomodoro session
     if (!this.state.isRunning && this.state.totalElapsed === null) {
       return (
-        <div className="">
+        <span className="">
           {/*
           <button
             onClick={this.initializePomodoro}
@@ -140,7 +140,7 @@ var Timer = React.createClass({
           <a href="#"
             onClick={this.initializePomodoro}
             className='start-pomodoro'><i className="fa fa-play fa-fw"></i></a>
-        </div>
+        </span>
     )
   } else {
     // ELSE, WE ARE IN THE MIDDLE OF A TIMED SESSION

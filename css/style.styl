@@ -19,7 +19,8 @@ body
 
   h1
     &.logo
-      margin-top 1em
+      margin 0
+      margin-bottom 1em
       img
         &.tiny-tomato
           position relative
@@ -29,6 +30,20 @@ body
     &.activities-ol, &.done-ol
       margin 1em 0
       font-family "inconsolata", "monaco", "courier new", monospace
+      font-family "lato", "monaco", "courier new", monospace
+    li
+      margin 0.3em 0
+      span
+        &.li-activity-wrapper
+          position relative
+          //top 50%
+          //transform translateY(50%)
+      span
+        &.activity-start
+          position relative
+          top 0.8em
+          cursor pointer
+          cursor hand
 
   a
     &.start-pomodoro
@@ -36,7 +51,7 @@ body
       cursor hand
       i
         &.fa
-          color #8eff11
+          color primaryAccent
           font-size 3em
           &:hover
             -webkit-animation neon4 1.5s ease-in-out infinite alternate
@@ -45,26 +60,32 @@ body
   form
     button
       &.btn.btn-default.submit-task
+        display inline
         background rgba(255,255,255,.1)
         border-radius 0
         border none
     &.form-inline
       .input-group
         span
+          // this is the PENCIL ICON
           &.input-group-addon
+            font-size 1.8em
+            color primaryAccent
             position relative
             right -2.2em
-            bottom 0.5em
+            bottom 1.0em
             background none
         input
           &.form-control
+            //display inline
             height 1.4em
             padding 0.05em
             border-radius 0
-            padding-left 1.2em
+            padding-left 1.4em
             background-color transparent
-            color #b0f752
-            font-size 1.2em
+            color primaryAccent
+            color primaryText
+            font-size 2.2em
             border-bottom 1px solid dimgray
 
   .fullscreen-mid-pomodoro
@@ -97,11 +118,11 @@ body
       margin 0 0.5em
       font-size 0.8em
       color dimgray
-    &.activity-text
+    &.activity-text, &.done-text
       font-size 1.4em
       //text-transform uppercase
       font-weight bold
-      margin 0 1em;
+      margin 0 0.2em;
     &.activity-status
       margin 0 1em
       text-transform italic
@@ -141,3 +162,13 @@ body
 
           &:hover
             color rgba(128,128,128,0.6)
+
+
+  .done-wrapper
+    h4
+      margin 2em 0 1em 0
+    ol
+      &.done-ol
+        i
+          &.done-icon
+            margin 0

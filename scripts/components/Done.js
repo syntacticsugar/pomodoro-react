@@ -12,9 +12,8 @@ var Done = React.createClass({
     //debugger;
     if (nDone >= 1) {
       return (
-        <div className="row">
+        <div className="row done-wrapper">
           <div className="col-xs-12 col-sm-10 col-md-8 col-lg-6">
-            <h2>Done</h2>
             <h4>Props to you, these are things you've finished:</h4>
             <p>{nDone} are finished.</p>
             <ol className="done-ol">
@@ -26,7 +25,10 @@ var Done = React.createClass({
                       index={index}
                       className=""
                     >
-                      {activities[index].text}
+                      <span>
+                        <i className="done-icon fa fa-smile-o fa-fw fa-lg"></i>
+                      </span>
+                      <span className="done-text">{activities[index].text}</span>
                     </li>
                   )
                 }
