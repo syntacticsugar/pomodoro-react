@@ -28,14 +28,19 @@ body
 
   ol
     &.activities-ol, &.done-ol
+      color primaryText
       margin 1em 0
       font-family "inconsolata", "monaco", "courier new", monospace
       font-family "lato", "monaco", "courier new", monospace
     li
+      &.li-activity-outer-wrapper
+        position static
+        //z-index -1
       margin 0.3em 0
       span
         &.li-activity-wrapper
-          position relative
+          position static
+        //  position relative
           //top 50%
           //transform translateY(50%)
       span
@@ -91,8 +96,10 @@ body
   .fullscreen-mid-pomodoro
     padding 0 1em
     position fixed
-    z-index 50
+    z-index 500
     top 0
+    right 0
+    bottom 0
     left 0
     width 100%
     height 100%

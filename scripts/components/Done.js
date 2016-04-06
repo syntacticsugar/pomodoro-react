@@ -14,8 +14,10 @@ var Done = React.createClass({
       return (
         <div className="row done-wrapper">
           <div className="col-xs-12 col-sm-10 col-md-8 col-lg-6">
-            <h4>Props to you, these are things you've finished:</h4>
+            <h4><img src="images/completed-header.png" /></h4>
+            {/*
             <p>{nDone} are finished.</p>
+            */}
             <ol className="done-ol">
               {Object.keys(done).map(
                 function(index) {
@@ -23,7 +25,7 @@ var Done = React.createClass({
                     <li
                       key={index}
                       index={index}
-                      className=""
+                      className="animate slideInLeft"
                     >
                       <span>
                         <i className="done-icon fa fa-smile-o fa-fw fa-lg"></i>

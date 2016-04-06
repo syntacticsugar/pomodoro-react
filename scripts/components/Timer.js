@@ -15,7 +15,7 @@ var Timer = React.createClass({
       isRunning : false,
       //timeAtPause : null,
       //singlePomodoroInSeconds : 25*60, // (1500)
-      singlePomodoroInSeconds : 9,
+      singlePomodoroInSeconds : 1,
       fiveSeconds : 5,
     }
   },
