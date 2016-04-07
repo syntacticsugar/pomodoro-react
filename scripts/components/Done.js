@@ -41,7 +41,7 @@ var Done = React.createClass({
       )
     } else {
       return (
-        <div>Completed tasks will neatly load here.</div>
+        <div></div>
       )
     }
 

@@ -146,7 +146,7 @@ var Activities = React.createClass({
   },
   showHideActivitiesHeader : function() {
     var activities = this.props.activities;
-    var newActivitiesQty = Object.keys(activities).filter( (activity) => activities[activity].status === "new" ).length;
+    var newActivitiesQty = Object.keys(activities).filter( (activity) => activities[activity].status !== "done" ).length;
 
     if (newActivitiesQty > 0) {
       return (

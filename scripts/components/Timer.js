@@ -15,7 +15,7 @@ var Timer = React.createClass({
       isRunning : false,
       //timeAtPause : null,
       //singlePomodoroInSeconds : 25*60, // (1500)
-      singlePomodoroInSeconds : 25*60,
+      singlePomodoroInSeconds : 1,
       fiveSeconds : 5,
     }
   },
@@ -149,7 +149,7 @@ var Timer = React.createClass({
     return (
       <span>
         <span className="">
-          <a href="#" className='start-pomodoro'><i className="fa fa-play fa-fw"></i></a>
+          <a href="#" className='start-pomodoro'><i className="fa fa-clock-o fa-fw"></i></a>
         </span>
         <div className="row fullscreen-mid-pomodoro">
           <div className='current-activity col-xs-12 col-sm-10 col-md-8 center-block'>
