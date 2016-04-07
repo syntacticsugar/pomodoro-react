@@ -195,8 +195,12 @@ var Activities = React.createClass({
           onSubmit={this.createActivity}
           className='form-inline'
         >
+          {/*
           <div className="row">
             <div className="input-group col-xs-10 col-sm-10 col-md-6 col-lg-6">
+          */}
+          <div className="">
+            <div className="input-group ">
 
               <span className="input-group-addon">
                 {this.showPencilIcon()}
