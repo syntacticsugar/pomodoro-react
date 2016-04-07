@@ -140,6 +140,16 @@ var Activities = React.createClass({
       )
     }
   },
+  showHideActivitiesHeader : function() {
+    var activities = this.props.activities;
+    var newActivitiesQty = Object.keys(activities).filter( (activity) => activities[activity].status === "new" ).length;
+
+    if (newActivitiesQty > 0) {
+      return (
+        <div><img src="images/to-do-header.png" /></div>
+      )
+    }
+  },
   renderActivity : function(item,key) {
     //console.log('\n\n\n\n\n\ninside renderActivity');
     if (item.status != 'done') {
@@ -207,6 +217,7 @@ var Activities = React.createClass({
           </div>
         </form>
         <div className="row">
+          {this.showHideActivitiesHeader()}
           <ol className='activities-ol col-xs-12 col-sm-12 col-md-8 col-lg-8'>
             {Object.keys(activities).map(
               function(key) {
