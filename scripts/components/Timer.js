@@ -21,6 +21,7 @@ var Timer = React.createClass({
   },
   initializePomodoro : function(event) {
     event.preventDefault();
+    this.props.setEnableAnimations(false);
     this.setState({
       initializedAt : Math.floor((new Date().getTime())/1000),
     });
@@ -53,6 +54,7 @@ var Timer = React.createClass({
   },
   clearEverything : function(event) {
     event.preventDefault();
+    this.props.setEnableAnimations(true);
     this.setState( {
       initializedAt : null,
       lastCountedAt : null,
@@ -145,37 +147,42 @@ var Timer = React.createClass({
   } else {
     // ELSE, WE ARE IN THE MIDDLE OF A TIMED SESSION
     return (
-      <div className="row fullscreen-mid-pomodoro">
-        <div className='current-activity col-xs-12 col-sm-10 col-md-8 center-block'>
-          {currentActivityName} : {activities[activityKey].status}
-        </div>
-        <div className='col-xs-12 col-sm-10 col-md-8 timer-wrapper center-block'>
-          <button
-            onClick={this.pauseHandler}
-            className='btn btn-lg timer-control'>
-            <i className="fa fa-pause fa-2x pull-left"></i> </button>
-          <button
-            onClick={this.startOrResumeCounting}
-            className='btn btn-lg timer-control'>
-            <i className="fa fa-play fa-2x pull-left"></i> </button>
-          <button
-            onClick={this.clearEverything}
-            className='btn btn-lg timer-control'>
-            <i className="fa fa-stop fa-2x pull-left"></i> </button>
-          <section className='elapsed-counter'>
-            {/*
-            <caption>total elapsedTime: <br/><span className="elapsed">{prettyTime}</span></caption>
+      <span>
+        <span className="">
+          <a href="#" className='start-pomodoro'><i className="fa fa-play fa-fw"></i></a>
+        </span>
+        <div className="row fullscreen-mid-pomodoro">
+          <div className='current-activity col-xs-12 col-sm-10 col-md-8 center-block'>
+            {currentActivityName} : {activities[activityKey].status}
+          </div>
+          <div className='col-xs-12 col-sm-10 col-md-8 timer-wrapper center-block'>
+            <button
+              onClick={this.pauseHandler}
+              className='btn btn-lg timer-control'>
+              <i className="fa fa-pause fa-2x pull-left"></i> </button>
+            <button
+              onClick={this.startOrResumeCounting}
+              className='btn btn-lg timer-control'>
+              <i className="fa fa-play fa-2x pull-left"></i> </button>
+            <button
+              onClick={this.clearEverything}
+              className='btn btn-lg timer-control'>
+              <i className="fa fa-stop fa-2x pull-left"></i> </button>
+            <section className='elapsed-counter'>
+              {/*
+              <caption>total elapsedTime: <br/><span className="elapsed">{prettyTime}</span></caption>
+              */}
+              <span className="elapsed">{prettyTime}</span>
+            </section>
+          </div>
+          {/*
+          <FontAwesomeExample />
             */}
-            <span className="elapsed">{prettyTime}</span>
-          </section>
+          {/*
+            <Distractions className="row" />
+            */}
         </div>
-        {/*
-        <FontAwesomeExample />
-          */}
-        {/*
-          <Distractions className="row" />
-          */}
-      </div>
+      </span>
     )
   }
 

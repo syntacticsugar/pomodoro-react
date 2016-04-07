@@ -16,7 +16,7 @@ var App = React.createClass({
       activityInput : "",
       activities : {},
       //done : []
-      done : {}
+      done : {},
     }
   },
   // state has been updated
@@ -99,7 +99,11 @@ var Activities = React.createClass({
   getInitialState : function() {
     return {
       activityInputIsFocused : false,
+      enableAnimations: true,
     }
+  },
+  setEnableAnimations : function(bool) {
+    this.setState({enableAnimations: bool});
   },
   createActivity : function(event) {
     event.preventDefault();
@@ -154,7 +158,7 @@ var Activities = React.createClass({
     //console.log('\n\n\n\n\n\ninside renderActivity');
     if (item.status != 'done') {
       return (
-          <li key={key} className="li-activity-outer-wrapper animated slideInLeft">
+          <li key={key} className={"li-activity-outer-wrapper " +  (this.state.enableAnimations ? "animated slideInLeft" : "")}>
             <span className='li-activity-wrapper'>
               {/*
               <span className="activity-key">key: {key}</span>
@@ -162,6 +166,7 @@ var Activities = React.createClass({
               <span className="activity-start">
                 <Timer
                   activityKey={key}
+                  setEnableAnimations={this.setEnableAnimations}
                   activities={this.props.activities}
                   markDoneActivity={this.props.markDoneActivity}
                   updateActivityProperty={this.props.updateActivityProperty}
