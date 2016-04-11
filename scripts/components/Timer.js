@@ -15,24 +15,15 @@ var Timer = React.createClass({
       isRunning : false,
       //timeAtPause : null,
       //singlePomodoroInSeconds : 25*60, // (1500)
-      singlePomodoroInSeconds : 1,
+      singlePomodoroInSeconds : 12,
       fiveSeconds : 5,
     }
-  },
-  initializePomodoro : function(event) {
-    event.preventDefault();
-    this.props.setEnableAnimations(false);
-    this.setState({
-      initializedAt : Math.floor((new Date().getTime())/1000),
-    });
-
-    this.props.updateActivityProperty(this.props.activityKey,'status','in-progress');
-    this.startOrResumeCounting();
   },
   startOrResumeCounting : function(event) {
     if (event) {
       event.preventDefault();
     }
+    /*
     if (this.state.isRunning === false) {
       this.setState({
         lastCountedAt : Math.floor((new Date().getTime())/1000),
@@ -42,57 +33,18 @@ var Timer = React.createClass({
     } else {
       console.log("do nothing");
     }
-  },
-  interruptCounting : function() {
-    this.setState({
-      isRunning : false
-    });
+    */
   },
   pauseHandler : function(event) {
     event.preventDefault();
     this.interruptCounting();
   },
-  clearEverything : function(event) {
+  toggleCounting : function(event) {
     event.preventDefault();
-    this.props.setEnableAnimations(true);
-    this.setState( {
-      initializedAt : null,
-      lastCountedAt : null,
-      totalElapsed: null,
-      isRunning : false,
-    });
-  },
-  countTime : function() {
-    var totalElapsed = this.state.totalElapsed;
-    var singlePomodoroInSeconds = this.state.singlePomodoroInSeconds;
-    //if (this.state.totalElapsed > 1 && this.state.totalElapsed < 1500) {
-    //if (this.state.totalElapsed > 1) {
-    //if (totalElapsed !== null && totalElapsed < singlePomodoroInSeconds) {
-    if (totalElapsed < singlePomodoroInSeconds) {
-      //console.log("inside first `if` of countTime, totalElapsed");
-      //console.log(totalElapsed);
-      setTimeout( function() {
-        if (this.state.isRunning) {
-          var currentTime = Math.floor((new Date().getTime())/1000);
-          var newTotalElapsed = (currentTime - this.state.lastCountedAt) + totalElapsed;
-          this.setState( {
-            //totalElapsed : this.prettyFormatSeconds(newTotalElapsed),
-            totalElapsed : newTotalElapsed,
-            lastCountedAt : Math.floor((new Date().getTime())/1000),
-          });
-          // recursively run again and again
-          this.countTime();
-        }
-      // 'this' binds the value of `this` to Timer component
-      }.bind(this),1000);
-    } else if (totalElapsed >= singlePomodoroInSeconds) {
-      this.finishPomodoro();
-    }
+    this.props.pauseOrResumeSession();
   },
   finishPomodoro : function() {
-    this.interruptCounting();
-    //this.props.updateActivityProperty(this.props.activityKey,'status','done');
-    this.props.markDoneActivity(this.props.activityKey);
+    this.props.abandonSession();
   },
   prettyFormatSeconds : function(seconds) {
     var minutes, leftoverSecs, results;
@@ -124,38 +76,23 @@ var Timer = React.createClass({
     return results;
   },
   render : function() {
-    var totalElapsed = this.state.totalElapsed;
+    console.log('currentSession');
+    console.log(this.props.currentSession);
+    var totalElapsed = this.props.currentSession.totalElapsed;
     var prettyTime = this.prettyFormatSeconds(totalElapsed);
-    var activities = this.props.activities;
-    var activityKey = this.props.activityKey;
-    var currentActivityName = activities[activityKey].text;
+    //var activities = this.props.activities;
+    //var activityKey = this.props.activityKey;
+    var currentActivityName = this.props.currentSession['name'];
 
-      // first time running a Pomodoro session
-    if (!this.state.isRunning && this.state.totalElapsed === null) {
-      return (
-        <span className="">
-          {/*
-          <button
-            onClick={this.initializePomodoro}
-            className='btn btn-primary pom-button start-pomodoro'>begin Pomodoro</button>
-            */}
-          <a href="#"
-            onClick={this.initializePomodoro}
-            className='start-pomodoro'><i className="fa fa-play fa-fw"></i></a>
-        </span>
-    )
-  } else {
-    // ELSE, WE ARE IN THE MIDDLE OF A TIMED SESSION
+    // WE ARE IN THE MIDDLE OF A TIMED SESSION
     return (
       <span>
-        <span className="">
-          <a href="#" className='start-pomodoro'><i className="fa fa-clock-o fa-fw"></i></a>
-        </span>
         <div className="row fullscreen-mid-pomodoro">
           <div className='current-activity col-xs-12 col-sm-10 col-md-8 center-block'>
-            {currentActivityName} : {activities[activityKey].status}
+            {this.props.currentSession.name} : {'in-progress (TODO fix this)'}
           </div>
           <div className='col-xs-12 col-sm-10 col-md-8 timer-wrapper center-block'>
+           {/*
             <button
               onClick={this.pauseHandler}
               className='btn btn-lg timer-control'>
@@ -164,8 +101,14 @@ var Timer = React.createClass({
               onClick={this.startOrResumeCounting}
               className='btn btn-lg timer-control'>
               <i className="fa fa-play fa-2x pull-left"></i> </button>
+            */}
             <button
-              onClick={this.clearEverything}
+              onClick={this.props.pauseOrResumeSession}
+              className='btn btn-lg timer-control'>
+              <i className={"fa fa-2x " + (this.props.currentSession.isRunning ? "fa-pause" : "fa-play")}></i>
+            </button>
+            <button
+              onClick={this.props.abandonSession}
               className='btn btn-lg timer-control'>
               <i className="fa fa-stop fa-2x pull-left"></i> </button>
             <section className='elapsed-counter'>
@@ -184,7 +127,6 @@ var Timer = React.createClass({
         </div>
       </span>
     )
-  }
 
   }
 });

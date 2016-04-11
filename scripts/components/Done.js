@@ -13,8 +13,10 @@ var Done = React.createClass({
     if (nDone >= 1) {
       return (
         <div className="row done-wrapper">
+          <div className='done-header'>
+            <img className='done-header-image' src="images/completed-header.png" />
+          </div>
           <div className="col-xs-12 col-sm-10 col-md-8 col-lg-6">
-            <h4><img src="images/completed-header.png" /></h4>
             {/*
             <p>{nDone} are finished.</p>
             */}
