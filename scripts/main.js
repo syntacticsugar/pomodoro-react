@@ -200,7 +200,7 @@ var App = React.createClass({
         return (
           <div>
             <h1 className="logo">
-              <img className="tiny-tomato" src="images/bit-red-tomato-tiny.png" /><img src="images/logo.png" />
+              <img className="tiny-tomato img-responsive" src="images/bit-red-tomato-tiny.png" /><img className="logo-title img-responsive" src="images/logo.png" />
             </h1>
 
             <Activities
