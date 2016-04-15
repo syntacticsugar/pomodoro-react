@@ -88,42 +88,44 @@ var Timer = React.createClass({
     return (
       <span>
         <div className="row fullscreen-mid-pomodoro">
-          <div className='current-activity col-xs-12 col-sm-10 col-md-8 center-block'>
-            {this.props.currentSession.name} : {'in-progress (TODO fix this)'}
-          </div>
-          <div className='col-xs-12 col-sm-10 col-md-8 timer-wrapper center-block'>
-           {/*
-            <button
-              onClick={this.pauseHandler}
-              className='btn btn-lg timer-control'>
-              <i className="fa fa-pause fa-2x pull-left"></i> </button>
-            <button
-              onClick={this.startOrResumeCounting}
-              className='btn btn-lg timer-control'>
-              <i className="fa fa-play fa-2x pull-left"></i> </button>
-            */}
-            <button
-              onClick={this.props.pauseOrResumeSession}
-              className='btn btn-lg timer-control'>
-              <i className={"fa fa-2x " + (this.props.currentSession.isRunning ? "fa-pause" : "fa-play")}></i>
-            </button>
-            <button
-              onClick={this.props.abandonSession}
-              className='btn btn-lg timer-control'>
-              <i className="fa fa-stop fa-2x pull-left"></i> </button>
-            <section className='elapsed-counter'>
-              {/*
-              <caption>total elapsedTime: <br/><span className="elapsed">{prettyTime}</span></caption>
+          <div className="fullscreen-inner-wrapper">
+            <div className='current-activity col-xs-12 col-sm-10 col-md-8 center-block'>
+              {this.props.currentSession.name} : {'in-progress'}
+            </div>
+            <div className='col-xs-12 col-sm-10 col-md-8 timer-wrapper center-block'>
+             {/*
+              <button
+                onClick={this.pauseHandler}
+                className='btn btn-lg timer-control'>
+                <i className="fa fa-pause fa-2x pull-left"></i> </button>
+              <button
+                onClick={this.startOrResumeCounting}
+                className='btn btn-lg timer-control'>
+                <i className="fa fa-play fa-2x pull-left"></i> </button>
               */}
-              <span className="elapsed">{prettyTime}</span>
-            </section>
+              <button
+                onClick={this.props.pauseOrResumeSession}
+                className='btn btn-lg timer-control'>
+                <i className={"fa fa-2x " + (this.props.currentSession.isRunning ? "fa-pause" : "fa-play")}></i>
+              </button>
+              <button
+                onClick={this.props.abandonSession}
+                className='btn btn-lg timer-control'>
+                <i className="fa fa-stop fa-2x pull-left"></i> </button>
+              <section className='elapsed-counter'>
+                {/*
+                <caption>total elapsedTime: <br/><span className="elapsed">{prettyTime}</span></caption>
+                */}
+                <span className="elapsed">{prettyTime}</span>
+              </section>
+            </div>
+            {/*
+            <FontAwesomeExample />
+              */}
+            {/*
+              <Distractions className="row" />
+              */}
           </div>
-          {/*
-          <FontAwesomeExample />
-            */}
-          {/*
-            <Distractions className="row" />
-            */}
         </div>
       </span>
     )

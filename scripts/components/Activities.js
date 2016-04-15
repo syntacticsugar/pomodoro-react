@@ -45,7 +45,6 @@ var Activities = React.createClass({
     } else {
       return (
           <i className="fa fa-thumbs-up fa-flip-horizontal fa-fw fa-lg"></i>
-
       )
     }
   },
@@ -55,7 +54,7 @@ var Activities = React.createClass({
 
     if (newActivitiesQty > 0) {
       return (
-        <div><img src="images/to-do-header.png" /></div>
+        <div className=""><img src="images/to-do-header.png" /></div>
       )
     }
   },
@@ -95,41 +94,43 @@ var Activities = React.createClass({
   render : function() {
     var activities = this.props.activities;
     return (
-      <div >
-        <form
-          ref='activityForm'
-          onSubmit={this.createActivity}
-          className='form-inline'
-        >
-          {/*
-          <div className="row">
-            <div className="input-group col-xs-10 col-sm-10 col-md-6 col-lg-6">
-          */}
-          <div className="">
-            <div className="input-group ">
-              <span className="input-group-addon">
-                {this.showPencilIcon()}
-              </span>
-              <input
-                  ref='name'
-                  onChange={this.props.updateActivityInput}
-                  onFocus={this.inputOnFocus}
-                  onBlur={this.inputOnBlur}
-                  type='text'
-                  value={this.props.activityInput}
-                  className="form-control input-activity"
-              />
-              <button
-                disabled={this.props.activityInput.length===0}
-                className='btn btn-default submit-task pull-right'
-                type='submit'
-                ><i className="fa fa-plus fa-fw fa-lg"></i>
-              </button>
+      <div className="activity-wrapper">
+        <div className="submit-activity-wrapper row">
+          <form
+            ref='activityForm'
+            onSubmit={this.createActivity}
+            className='form-inline col-xs-12 col-md-6'
+          >
+            {/*
+            <div className="row">
+              <div className="input-group col-xs-10 col-sm-10 col-md-6 col-lg-6">
+            */}
+              <div className="input-group">
+                <span className="input-group-addon">
+                  {this.showPencilIcon()}
+                </span>
+
+                <input
+                    ref='name'
+                    onChange={this.props.updateActivityInput}
+                    onFocus={this.inputOnFocus}
+                    onBlur={this.inputOnBlur}
+                    value={this.props.activityInput}
+                    type="text"
+                    className="form-control input-activity"
+                />
+                <span className="input-group-btn">
+                  <button
+                    disabled={this.props.activityInput.length===0}
+                    className="btn btn-default submit-task"
+                    type="submit"
+                    ><i className="fa fa-plus fa-fw "></i>
+                  </button>
+                </span>
             </div>
-            <div className="input-group col-xs-2 col-sm-2 col-md-2 col-lg-2">
-            </div>
-          </div>
-        </form>
+          </form>
+        </div>{/* ./enter-activity-wrapper  */}
+
         <div className="row">
           {this.showHideActivitiesHeader()}
           <ol className='activities-ol col-xs-12 col-sm-12 col-md-8 col-lg-8'>
@@ -140,6 +141,7 @@ var Activities = React.createClass({
             )}
           </ol>
         </div>
+
       </div>
     )
   },
