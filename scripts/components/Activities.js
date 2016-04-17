@@ -80,7 +80,11 @@ var Activities = React.createClass({
               <span className="activity-text">{item.text} </span>
               <span className="activity-status">({item.status})</span>
               <span className="activity-delete">
-                <a href='#' onClick={ function() {this.props.deleteActivity(key)}.bind(this)}>
+                <a href='#' onClick={ function(event) {
+                    event.preventDefault();
+                    this.props.deleteActivity(key);
+                  }.bind(this)
+                }>
                   <i className="fa fa-trash-o"></i>
                   delete
                 </a>

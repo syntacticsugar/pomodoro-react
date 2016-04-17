@@ -132,17 +132,20 @@ var App = React.createClass({
     var timestamp = (new Date).getTime();
     this.state.userData.activities['activity-' + timestamp] = activity;
     this.setState({
-      activities : this.state.userData.activities,
+      userData : this.state.userData,
       activityInput : ""
     });
   },
   deleteActivity : function(index) {
     // prevent refresh
     //event.preventDefault();
+    console.log("inside deleteActivity()");
     delete this.state.userData.activities[index];
+    console.log(index);
     this.setState({
-      activities : this.state.userData.activities,
+      userData : this.state.userData,
     })
+    console.log("after deleteActivity()");
   },
   updateActivityProperty : function(key,propertyName,value) {
     this.state.userData.activities[key][propertyName] = value;
@@ -334,5 +337,5 @@ var App = React.createClass({
 
 ReactDOM.render(
   <App />,
-  document.querySelector(".container-fluid")
+  document.querySelector(".container")
 );
