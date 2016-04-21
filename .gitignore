@@ -1,0 +1,6 @@
+*.sw*
+.DS_Store
+build/*
+node_modules
+npm-debug.log
+learning_about_objects.js
