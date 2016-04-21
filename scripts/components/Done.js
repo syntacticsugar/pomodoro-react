@@ -9,6 +9,8 @@ var Done = React.createClass({
 
     var nDone = Object.keys(done).length;
 
+    console.log('nDone:');
+    console.log(nDone)
     //debugger;
     if (nDone >= 1) {
       return (

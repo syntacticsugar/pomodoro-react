@@ -16,19 +16,16 @@ import LoginWithSocialMedia from './components/LoginWithSocialMedia';
 //Firebase setup
 var Rebase = require("re-base"); // used for syncing
 var Firebase = require("firebase"); // used for auth
-var base = Rebase.createClass("https://pomagogo.firebaseio.com/");
-const firebaseAuthRef = new Firebase("https://pomagogo.firebaseio.com/");
+var base = Rebase.createClass("https://poma.firebaseio.com/");
+const firebaseAuthRef = new Firebase("https://poma.firebaseio.com/");
 
 var App = React.createClass({
   getInitialState : function() {
     return {
       loggedIn : null,
       activityInput : "",
-      userData : {
-        activities : {},
-        //done : []
-        done : {},
-      },
+      activities : {},
+      done : {},
       //currentActivity : null, /* "activity-123456" */
       currentSession : null,
       /*
@@ -72,9 +69,12 @@ var App = React.createClass({
     console.log(authData);
     var uid = authData.uid;
     // save the login token in the browser
-    localStorage.setItem('token',authData.token);
+    //localStorage.setItem('token',authData.token);
 
-    const activitiesRef = firebaseAuthRef.child('users/' + uid + '/activities');
+    var activitiesPath = 'users/' + uid + '/activities';
+
+    /*
+    const activitiesRef = firebaseAuthRef.child(activitiesPath);
     activitiesRef.on('value', (snapshot)=> {
       var data = snapshot.val() || {};
       // claim it as our own if there is no owner already
@@ -83,35 +83,38 @@ var App = React.createClass({
           owner : uid,
         });
       }
+    */
       if (!this.state.loggedIn) {
-        // get existing userData (for un-authenticated user, so we can add them to userData for their account
-        var preLoginUserData = this.state.userData;
+        // get existing activities (for un-authenticated user, so we can add them to activities for their account
+        var preLoginActivities = this.state.activities;
+        var preLoginDone = this.state.done;
 
         console.log('about to setup sync sync state:');
-        console.log('path = users/' + uid + '/userData');
-        var syncUserData = base.syncState('users/' + uid + '/userData', {
+        var syncActivities = base.syncState('users/' + uid + '/activities', {
           context : this,
-          state : 'userData'
+          state : 'activities',
         });
-        console.log(syncUserData);
+        console.log(syncActivities);
 
-        var userData = this.state.userData;
-        // copy preLoginUserData into new (authenticated) userData (this might overwrite userData, but it's unlikely)
-        for (var k in preLoginUserData) {
-          userData[k] = preLoginUserData[k];
+        // copy preLogingActivities into new (authenticated) activities
+        // (this might overwrite activities, but only if you're using on two devices)
+        for (var k in preLoginActivities) {
+          this.state.activities[k] = preLoginActivities[k];
         }
         // update our state to reflect the current store owner and user
         this.setState({
-          userData: userData,
+          activities: this.state.activities,
+          done : this.state.done,
           loggedIn: {
             uid : uid,
             provider : authData.provider,
             socialMediaDisplayName : authData[authData.provider].displayName,
-            rebase: [syncUserData],
+            //rebase: [syncUserData, syncActivities, syncDone],
+            rebase: [syncActivities],
           }
         });
       }
-    });
+    //});
   },
 
 
@@ -130,9 +133,9 @@ var App = React.createClass({
 
   addActivity : function(activity) {
     var timestamp = (new Date).getTime();
-    this.state.userData.activities['activity-' + timestamp] = activity;
+    this.state.activities['activity-' + timestamp] = activity;
     this.setState({
-      userData : this.state.userData,
+      activities : this.state.activities,
       activityInput : ""
     });
   },
@@ -140,44 +143,51 @@ var App = React.createClass({
     // prevent refresh
     //event.preventDefault();
     console.log("inside deleteActivity()");
-    delete this.state.userData.activities[index];
+    //delete this.state.activities[index];
+    delete this.state.activities[index];
+    console.log(this.state.activities);
     console.log(index);
     this.setState({
-      userData : this.state.userData,
+      //activityInput : "",
+      activities : this.state.activities,
     })
+    if (this.state.loggedIn) {
+      var deleteRef = new Firebase('https://poma.firebaseio.com/' + 'users/' + this.state.loggedIn.uid + '/activities/' + index);
+      deleteRef.remove();
+    }
     console.log("after deleteActivity()");
   },
   updateActivityProperty : function(key,propertyName,value) {
-    this.state.userData.activities[key][propertyName] = value;
-    this.setState({ activities : this.state.userData.activities });
+    this.state.activities[key][propertyName] = value;
+    this.setState({ activities : this.state.activities });
     //console.log('inside updateActivityProperty in main.js');
   },
   markDoneActivity : function(key) {
-    this.state.userData.activities[key].status = "done";
-    this.state.userData.activities[key].isFinished = true;
-    //this.state.userData.done.push(this.state.userData.activities[key]);
+    this.state.activities[key].status = "done";
+    this.state.activities[key].isFinished = true;
+    //this.state.done.push(this.state.activities[key]);
     console.log('try to update "done":');
-    console.log(this.state.userData.done);
+    console.log(this.state.done);
     console.log(key);
-    this.state.userData.done[key] = key;
-    console.log(this.state.userData.done);
+    this.state.done[key] = key;
+    console.log(this.state.done);
     this.setState({
-      activities : this.state.userData.activities,
-      //done : this.state.userData.done,
+      activities : this.state.activities,
+      //done : this.state.done,
     });
-    this.setState({done : this.state.userData.done});
+    this.setState({done : this.state.done});
     //alert("key:" + key);
     //alert(key);
   },
 
   createAndInitializeNewSession : function(activityKey) {
-    this.state.userData.activities[activityKey].status = 'in-progress';
+    this.state.activities[activityKey].status = 'in-progress';
 
     var timeAtInitialization = Math.floor((new Date().getTime())/1000);
 
     this.state.currentSession = {
           activity : activityKey,
-          name : this.state.userData.activities[activityKey].text,
+          name : this.state.activities[activityKey].text,
           isRunning : true,
           initializedAt : timeAtInitialization,
           totalElapsed : 0,
@@ -186,7 +196,7 @@ var App = React.createClass({
     };
 
     this.setState({
-      activities : this.state.userData.activities,
+      activities : this.state.activities,
       currentSession : this.state.currentSession,
     });
 
@@ -214,19 +224,19 @@ var App = React.createClass({
     console.log('abandonSession: this.state.currentSession');
     console.log(this.state.currentSession);
     var activityKey = this.state.currentSession.activity;
-    this.state.userData.activities[activityKey].status = 'abandoned';
+    this.state.activities[activityKey].status = 'abandoned';
     this.setState({
-      activities : this.state.userData.activities,
+      activities : this.state.activities,
       currentSession : null,
     });
   },
   completeSession : function() {
     var activityKey = this.state.currentSession.activity;
-    //this.state.userData.activities[activityKey].status = 'done';
-    //this.state.userData.activities[activityKey].isFinished = true;
+    //this.state.activities[activityKey].status = 'done';
+    //this.state.activities[activityKey].isFinished = true;
     this.markDoneActivity(activityKey);
     this.setState({
-      //activities : this.state.userData.activities,
+      //activities : this.state.activities,
       currentSession : null,
     });
 
@@ -290,7 +300,7 @@ var App = React.createClass({
         </header>
 
         <Activities
-            activities = {this.state.userData.activities}
+            activities = {this.state.activities}
             activityInputIsFocused = {this.state.activityInputIsFocused}
             activityInput={this.state.activityInput}
             createAndInitializeNewSession={this.createAndInitializeNewSession}
@@ -300,14 +310,17 @@ var App = React.createClass({
             addActivity={this.addActivity}
             deleteActivity={this.deleteActivity}
         />
-        <Done
-            activities={this.state.userData.activities}
-            done={this.state.userData.done}
-        />
+
         <br/><br/><br/>
       </div>
     )
   },
+  /*
+  <Done
+      activities={this.state.activities}
+      done={this.state.done}
+  />
+  */
 
   render : function(){
       if (this.state.currentSession) {
@@ -320,7 +333,7 @@ var App = React.createClass({
               abandonSession={this.abandonSession}
               //activityKey={this.state.currentActivity}
               //setEnableAnimations={this.setEnableAnimations}
-              activities={this.state.userData.activities}
+              activities={this.state.activities}
               markDoneActivity={this.markDoneActivity}
               updateActivityProperty={this.updateActivityProperty}
             />
