@@ -16,8 +16,9 @@ import LoginWithSocialMedia from './components/LoginWithSocialMedia';
 //Firebase setup
 var Rebase = require("re-base"); // used for syncing
 var Firebase = require("firebase"); // used for auth
-var base = Rebase.createClass("https://poma.firebaseio.com/");
-const firebaseAuthRef = new Firebase("https://poma.firebaseio.com/");
+const firebaseURL = "https://poma.firebaseio.com/"
+var base = Rebase.createClass(firebaseURL);
+const firebaseAuthRef = new Firebase(firebaseURL);
 
 var App = React.createClass({
   getInitialState : function() {
@@ -152,7 +153,7 @@ var App = React.createClass({
       activities : this.state.activities,
     })
     if (this.state.loggedIn) {
-      var deleteRef = new Firebase('https://poma.firebaseio.com/' + 'users/' + this.state.loggedIn.uid + '/activities/' + index);
+      var deleteRef = new Firebase(firebaseURL + 'users/' + this.state.loggedIn.uid + '/activities/' + index);
       deleteRef.remove();
     }
     console.log("after deleteActivity()");
