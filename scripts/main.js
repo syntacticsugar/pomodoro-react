@@ -311,17 +311,15 @@ var App = React.createClass({
             addActivity={this.addActivity}
             deleteActivity={this.deleteActivity}
         />
-
+        <Done
+            activities={this.state.activities}
+            done={this.state.done}
+        />
         <br/><br/><br/>
       </div>
     )
   },
-  /*
-  <Done
-      activities={this.state.activities}
-      done={this.state.done}
-  />
-  */
+
 
   render : function(){
       if (this.state.currentSession) {
