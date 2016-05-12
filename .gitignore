@@ -4,3 +4,4 @@ build/*
 node_modules
 npm-debug.log
 learning_about_objects.js
+how_nick_force_syncs_firebase.js
