@@ -7,8 +7,8 @@ var Activities = React.createClass({
       enableAnimations: true,
     }
   },
-  setEnableAnimations : function(bool) {
-    this.setState({enableAnimations: bool});
+  setEnableAnimations : function(booolean) {
+    this.setState({enableAnimations: booolean});
   },
   createActivity : function(event) {
     event.preventDefault();

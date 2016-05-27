@@ -263,6 +263,7 @@ var App = React.createClass({
       //console.log("inside first `if` of countTime, totalElapsed");
       //console.log(totalElapsed);
       setTimeout( function() {
+        // isRunning is toggled by `pause` button
         if (isRunning) {
           var currentTime = Math.floor((new Date().getTime())/1000);
           var newTotalElapsed = (currentTime - lastCountedAt) + totalElapsed;
