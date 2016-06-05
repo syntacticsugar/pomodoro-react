@@ -180,6 +180,10 @@ var App = React.createClass({
     //alert("key:" + key);
     //alert(key);
   },
+  addDistraction : function(activityKey,distraction) {
+    var timestamp = (new Date).getTime();
+
+  },
 
   createAndInitializeNewSession : function(activityKey) {
     this.state.activities[activityKey].status = 'in-progress';
