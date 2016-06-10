@@ -178,33 +178,34 @@ body
     .timer-wrapper
       margin 0 auto
 
-    span
-      &.seconds
-        font-size 0.5em
-    &.activity-key
-      margin 0 0.5em
-      font-size 0.8em
-      color dimgray
-    &.activity-text, &.done-text
-      font-size 1.4em
-      //text-transform uppercase
-      font-weight bold
-      margin 0 0.2em;
-    &.activity-status
-      margin 0 1em
-      text-transform italic
-      color dimgray
-      font-size 0.7em
-    &.activity-delete
-      color dimgray
-      i
-        &.fa
-          color dimgray
-          font-size 1.5em
-          margin 0 0.5em
+  span
+    &.seconds
+      font-size 0.5em
+  &.activity-key
+    margin 0 0.5em
+    font-size 0.8em
+    color dimgray
+  &.activity-text, &.done-text
+    font-size 1.4em
+    //text-transform uppercase
+    font-weight bold
+    margin 0 0.2em;
+  &.activity-status
+    text-transform italic
+    color silver
+    font-size 0.7em
+  &.activity-delete
+    //color dimgray
+    margin-left 0.2em
+    &:hover
+      //color silver
+    i
+      &.fa
+        font-size 1.5em
+        margin 0 0.1em
   a
     &.delete-link
-      margin 0 1em
+      margin 0 0.2em
   button
     &.timer-control
       background-color transparent
@@ -220,7 +221,13 @@ body
         color aqua
 
   .distractions-wrapper
+    color dimgray
     margin-top 2em
+    input
+      border-bottom 2px solid silver
+      background transparent
+      color silver
+      font-size 1.3em
     ol
       &.distractions-ol
         li

@@ -39,17 +39,14 @@ var App = React.createClass({
 
       }
       */
+      distractionInput : "",
+      distractions : {},
     }
   },
-
-
-
-
   authenticate : function(provider) {
     console.log("trying to auth with" + provider);
     firebaseAuthRef.authWithOAuthPopup(provider, this.postAuthInstructions);
   },
-
   logout() {
     firebaseAuthRef.unauth();
     localStorage.removeItem('token');
@@ -117,12 +114,6 @@ var App = React.createClass({
       }
     //});
   },
-
-
-
-
-
-
   // state has been updated
   componentDidUpdate : function() {
     //console.log("componentDidUpdate.")
@@ -131,7 +122,6 @@ var App = React.createClass({
   updateActivityInput : function(event) {
     this.setState({ activityInput : event.target.value })
   },
-
   addActivity : function(activity) {
     var timestamp = (new Date).getTime();
     this.state.activities['activity-' + timestamp] = activity;
@@ -180,11 +170,20 @@ var App = React.createClass({
     //alert("key:" + key);
     //alert(key);
   },
-  addDistraction : function(activityKey,distraction) {
+  //addDistraction : function(activityKey,distraction) {
+  addDistraction : function(distraction) {
     var timestamp = (new Date).getTime();
-
+    this.state.distractions["distraction-" + timestamp] = distraction;
+    this.setState({
+      distractions : this.state.distractions,
+      distractionInput : ""
+    });
   },
-
+  updateDistractionInput : function(event) {
+    console.log("updateDistractionInput");
+    console.log(event);
+    this.setState({ distractionInput : event.target.value })
+  },
   createAndInitializeNewSession : function(activityKey) {
     this.state.activities[activityKey].status = 'in-progress';
 
@@ -197,7 +196,7 @@ var App = React.createClass({
           initializedAt : timeAtInitialization,
           totalElapsed : 0,
           lastCountedAt : timeAtInitialization,
-          singlePomodoroInSeconds : 5,
+          singlePomodoroInSeconds : 120,
     };
 
     this.setState({
@@ -309,7 +308,9 @@ var App = React.createClass({
             activities = {this.state.activities}
             activityInputIsFocused = {this.state.activityInputIsFocused}
             activityInput={this.state.activityInput}
+
             createAndInitializeNewSession={this.createAndInitializeNewSession}
+
             updateActivityInput={this.updateActivityInput}
             updateActivityProperty={this.updateActivityProperty}
             markDoneActivity={this.markDoneActivity}
@@ -319,13 +320,12 @@ var App = React.createClass({
         <Done
             activities={this.state.activities}
             done={this.state.done}
+            loggedIn={this.state.loggedIn}
         />
         <br/><br/><br/>
       </div>
     )
   },
-
-
   render : function(){
       if (this.state.currentSession) {
         return (
@@ -340,6 +340,11 @@ var App = React.createClass({
               activities={this.state.activities}
               markDoneActivity={this.markDoneActivity}
               updateActivityProperty={this.updateActivityProperty}
+              //distractions:
+              updateDistractionInput ={this.updateDistractionInput}
+              addDistraction = {this.addDistraction}
+              distractionInput={this.state.distractionInput}
+              distractions = {this.state.distractions}
             />
             {this.renderMain()}
           </div>

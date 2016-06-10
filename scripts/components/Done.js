@@ -8,6 +8,7 @@ var Done = React.createClass({
     var activities = this.props.activities;
 
     var nDone = Object.keys(done).length;
+    var loggedIn = this.props.loggedIn;
 
     console.log('nDone:');
     console.log(nDone)
@@ -45,7 +46,9 @@ var Done = React.createClass({
       )
     } else {
       return (
-        <div></div>
+        <div className={"done-quote-" + !loggedIn ? "loggedOut" : "loggedIn"}>
+          Finishing that which you start is a priceless virtue. {loggedIn} & {this.props.loggedIn}
+        </div>
       )
     }
 
