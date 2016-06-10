@@ -46,8 +46,11 @@ var Done = React.createClass({
       )
     } else {
       return (
-        <div className={"done-quote-" + !loggedIn ? "loggedOut" : "loggedIn"}>
+        <div className={"done-quote-" + (!loggedIn ? "loggedOut" : "loggedIn")}>
+          {/*
           Finishing that which you start is a priceless virtue. {loggedIn} & {this.props.loggedIn}
+            */}
+            Finishing that which you start is a priceless virtue.
         </div>
       )
     }
