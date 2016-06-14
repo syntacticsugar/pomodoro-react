@@ -129,6 +129,7 @@ var Timer = React.createClass({
                 currentSession={this.props.currentSession}
                 activityKey={this.props.currentSession['activity']}
               />
+              
               <DistractionsList
                   distractions = {this.props.distractions}
                   currentSession={this.props.currentSession}

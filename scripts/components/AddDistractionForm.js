@@ -64,7 +64,7 @@ var AddDistractionForm = React.createClass({
     var distractionInput = this.props.distractionInput;
 
     return (
-      <div className="distractions-wrapper">
+      <div className="add-distraction-form">
         <h3>Distractions</h3>
         <p>Add any distractions or tasks. You can worry about these AFTER you finish your Pomagogo session</p>
         <form
