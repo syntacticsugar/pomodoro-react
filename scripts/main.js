@@ -7,7 +7,7 @@ var CSSTransitionGroup = require('react-addons-css-transition-group');
 
 //import {Timer} from "./components/timer.jsx";
 var Timer = require("./components/Timer.js");
-var Distractions = require("./components/Distractions.js");
+var AddDistractionForm = require("./components/AddDistractionForm.js");
 var Activities = require("./components/Activities.js");
 import FontAwesomeExample from './components/FontAwesomeExample';
 import Done from './components/Done';

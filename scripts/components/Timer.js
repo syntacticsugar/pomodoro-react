@@ -2,7 +2,8 @@
 
 import React from 'react';
 import FontAwesomeExample from './FontAwesomeExample';
-import Distractions from './Distractions';
+import AddDistractionForm from './AddDistractionForm';
+import DistractionsList from './DistractionsList';
 //import Activities from '../main';
 
 var Timer = React.createClass({
@@ -120,7 +121,7 @@ var Timer = React.createClass({
                 <span className="elapsed">{prettyTime}</span>
               </section>
 
-              <Distractions
+              <AddDistractionForm
                 updateDistractionInput = {this.props.updateDistractionInput}
                 addDistraction = {this.props.addDistraction}
                 distractions = {this.props.distractions}
@@ -128,8 +129,13 @@ var Timer = React.createClass({
                 currentSession={this.props.currentSession}
                 activityKey={this.props.currentSession['activity']}
               />
-
+              <DistractionsList
+                  distractions = {this.props.distractions}
+                  currentSession={this.props.currentSession}
+                  activityKey={this.props.currentSession['activity']}
+              />
             </div>
+
             {/*
             <FontAwesomeExample />
               */}

@@ -1,6 +1,6 @@
 import React from 'react';
 
-var Distractions = React.createClass({
+var AddDistractionForm = React.createClass({
   getInitialState : function() {
     return {
       distractionInputIsFocused : false,
@@ -106,4 +106,4 @@ var Distractions = React.createClass({
   }
 });
 
-export default Distractions;
+export default AddDistractionForm;
