@@ -4,6 +4,7 @@ var AddDistractionForm = React.createClass({
   getInitialState : function() {
     return {
       distractionInputIsFocused : false,
+      submittedDistraction : null,
     }
   },
   inputOnFocus : function(event) {
@@ -44,6 +45,11 @@ var AddDistractionForm = React.createClass({
     };
     this.props.addDistraction(distraction);
     this.refs.distractionForm.reset();
+    // turn on submittedDistraction
+    this.state.submittedDistraction = true;
+    this.setState({
+      submittedDistraction : this.state.submittedDistraction,
+    });
   },
   renderListOfDistractions : function() {
     var distractions = this.props.distractions;
@@ -56,6 +62,14 @@ var AddDistractionForm = React.createClass({
       )
     }
   },
+  showCheckIcon : function() {
+    if (this.state.submittedDistraction) {
+      return (<i className="fa fa-check fa-fw fa-lg"></i>)
+    } else {
+      // return visibility:hidden
+      return (<i className="icon-invisible fa fa-check fa-fw fa-lg"></i>)
+    }
+  },
   render : function() {
     var lexicalThis = this;
     var addDistraction = this.props.addDistraction;
@@ -64,7 +78,7 @@ var AddDistractionForm = React.createClass({
     var distractionInput = this.props.distractionInput;
 
     return (
-      <div className="add-distraction-form">
+      <div className="row add-distraction-form">
         <h3>Distractions</h3>
         <p>Add any distractions or tasks. You can worry about these AFTER you finish your Pomagogo session</p>
         <form
@@ -90,20 +104,32 @@ var AddDistractionForm = React.createClass({
               <button
                 disabled={this.props.distractionInput.length===0}
                 className="btn btn-default submit-task"
-                onClick={function() {lexicalThis.createDistraction()}}
+                onClick={function() {lexicalThis.createDistraction}}
                 type="submit"
                 ><i className="fa fa-plus fa-fw "></i>
               </button>
+              {this.showCheckIcon()}
             </span>
           </div>
         </form>
-
-
-
-
       </div>  /* ./distractions-wrapper  */
     )
   }
 });
 
+/*
+var Checkmark = React.createClass({
+  render : function() {
+    return (
+      <div>
+        <i className="just-submitted fa fa-check fa-fw fa-lg"></i>
+      </div>
+    )
+  }
+});
+*/
+
 export default AddDistractionForm;
+/*
+export default Checkmark;
+*/
