@@ -250,9 +250,9 @@ var App = React.createClass({
     console.log('starting countTime');
     console.log(this.state.currentSession);
     var totalElapsed = this.state.currentSession.totalElapsed;
-    var isRunning = this.state.currentSession.isRunning;
     var lastCountedAt = this.state.currentSession.lastCountedAt;
     var singlePomodoroInSeconds = this.state.currentSession.singlePomodoroInSeconds;
+    var lexicalThis = this;
     //if (this.state.totalElapsed > 1 && this.state.totalElapsed < 1500) {
     //if (this.state.totalElapsed > 1) {
     //if (totalElapsed !== null && totalElapsed < singlePomodoroInSeconds) {
@@ -262,11 +262,14 @@ var App = React.createClass({
 
 
     if (totalElapsed < singlePomodoroInSeconds) {
-      console.log('totalElapsed < singlePomodoroInSeconds');
+      //console.log('totalElapsed < singlePomodoroInSeconds');
       //console.log("inside first `if` of countTime, totalElapsed");
       //console.log(totalElapsed);
       setTimeout( function() {
+        var isRunning = lexicalThis.state.currentSession.isRunning;
         // isRunning is toggled by `pause` button
+        console.debug("isRunning: " + isRunning);
+        console.debug("totalElapsed: " + totalElapsed);
         if (isRunning) {
           var currentTime = Math.floor((new Date().getTime())/1000);
           var newTotalElapsed = (currentTime - lastCountedAt) + totalElapsed;

@@ -21,33 +21,6 @@ var Timer = React.createClass({
       fiveSeconds : 5,
     }
   },
-  startOrResumeCounting : function(event) {
-    if (event) {
-      event.preventDefault();
-    }
-    /*
-    if (this.state.isRunning === false) {
-      this.setState({
-        lastCountedAt : Math.floor((new Date().getTime())/1000),
-        isRunning : true
-      });
-      this.countTime();
-    } else {
-      console.log("do nothing");
-    }
-    */
-  },
-  pauseHandler : function(event) {
-    event.preventDefault();
-    this.interruptCounting();
-  },
-  toggleCounting : function(event) {
-    event.preventDefault();
-    this.props.pauseOrResumeSession();
-  },
-  finishPomodoro : function() {
-    this.props.abandonSession();
-  },
   prettyFormatSeconds : function(seconds) {
     var minutes, leftoverSecs, results;
 
@@ -95,16 +68,6 @@ var Timer = React.createClass({
               {this.props.currentSession.name} : {'in-progress'}
             </div>
             <div className='col-xs-12 col-sm-10 col-md-8 timer-wrapper center-block'>
-             {/*
-              <button
-                onClick={this.pauseHandler}
-                className='btn btn-lg timer-control'>
-                <i className="fa fa-pause fa-2x pull-left"></i> </button>
-              <button
-                onClick={this.startOrResumeCounting}
-                className='btn btn-lg timer-control'>
-                <i className="fa fa-play fa-2x pull-left"></i> </button>
-              */}
               <button
                 onClick={this.props.pauseOrResumeSession}
                 className='btn btn-lg timer-control'>
@@ -115,9 +78,6 @@ var Timer = React.createClass({
                 className='btn btn-lg timer-control'>
                 <i className="fa fa-stop fa-2x pull-left"></i> </button>
               <section className='elapsed-counter'>
-                {/*
-                <caption>total elapsedTime: <br/><span className="elapsed">{prettyTime}</span></caption>
-                */}
                 <span className="elapsed">{prettyTime}</span>
               </section>
 
@@ -129,20 +89,13 @@ var Timer = React.createClass({
                 currentSession={this.props.currentSession}
                 activityKey={this.props.currentSession['activity']}
               />
-              
+
               <DistractionsList
                   distractions = {this.props.distractions}
                   currentSession={this.props.currentSession}
                   activityKey={this.props.currentSession['activity']}
               />
             </div>
-
-            {/*
-            <FontAwesomeExample />
-              */}
-            {/*
-              <Distractions className="row" />
-              */}
           </div>
         </div>
       </span>
