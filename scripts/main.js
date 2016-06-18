@@ -265,8 +265,8 @@ var App = React.createClass({
       //console.log('totalElapsed < singlePomodoroInSeconds');
       //console.log("inside first `if` of countTime, totalElapsed");
       //console.log(totalElapsed);
-      setTimeout( function() {
-        var isRunning = lexicalThis.state.currentSession.isRunning;
+      setTimeout( () => {
+        var isRunning = this.state.currentSession.isRunning;
         // isRunning is toggled by `pause` button
         console.debug("isRunning: " + isRunning);
         console.debug("totalElapsed: " + totalElapsed);
@@ -281,7 +281,7 @@ var App = React.createClass({
           this.countTime();
         }
       // 'this' binds the value of `this` to Timer component
-      }.bind(this),1000);
+    },1000);
     } else if (totalElapsed >= singlePomodoroInSeconds) {
       this.completeSession();
     }
