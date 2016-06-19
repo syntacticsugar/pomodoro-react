@@ -2,8 +2,23 @@
   Possible Animations:
   enter
   leave
-  appear Must set transitionAppear={true} on animation component 
+  appear Must set transitionAppear={true} on animation component
 */
+
+.just-submitted-enter
+  transition all 0.4s
+  color chartreuse
+  opacity 0
+  &.just-submitted-enter-active
+    opacity 1
+
+.just-submitted-leave
+  transition all 0.4s
+  opacity 1
+  &.just-submitted-leave-active
+    opacity 0
+
+
 
 .order-enter
   transition all 0.3s
@@ -31,9 +46,9 @@
   &.count-enter-active
     opacity 1
     transform translateY(0)
-    
-    
-  
+
+
+
 .count-leave
   transition all .2s
   left 0
@@ -42,5 +57,3 @@
   position absolute
   &.count-leave-active
     transform translateY(-100%)
-    
-  

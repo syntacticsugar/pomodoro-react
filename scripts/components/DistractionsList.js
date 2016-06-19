@@ -1,6 +1,7 @@
 'use strict'
 
 import React from 'react';
+var CSSTransitionGroup = require('react-addons-css-transition-group');
 /*
 distractions = {this.props.distractions}
 currentSession={this.props.currentSession}
@@ -9,9 +10,11 @@ activityKey={this.props.currentSession['activity']
 var DistractionsList = React.createClass({
   renderDistraction : function(key) {
     var distractions = this.props.distractions;
+    /*
     console.log('beginning of renderDistraction');
     console.log("distractions[key].text:");
     console.log(distractions[key].text);
+    */
     return (
       <li
         key={key}>

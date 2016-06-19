@@ -1,4 +1,6 @@
+'use strict'
 import React from 'react';
+var CSSTransitionGroup = require('react-addons-css-transition-group');
 
 var AddDistractionForm = React.createClass({
   getInitialState : function() {
@@ -36,7 +38,7 @@ var AddDistractionForm = React.createClass({
   },
   createDistraction(event) {
     event.preventDefault();
-    console.log("Distractions.createDistraction");
+    //console.log("Distractions.createDistraction");
     var distraction = {
       text : this.refs.name.value,
       belongsToActivity : "",
@@ -64,7 +66,18 @@ var AddDistractionForm = React.createClass({
   },
   showCheckIcon : function() {
     if (this.state.submittedDistraction) {
-      return (<i className="fa fa-check fa-fw fa-lg"></i>)
+      console.log(CSSTransitionGroup);
+      return
+        <CSSTransitionGroup
+          className="just-submitted"
+          component="span"
+          transitionAppear={true}
+          transitionName="just-submitted"
+          transitionEnterTimeout={4000}
+          transitionLeaveTimeout={4000}
+        >
+          <i className="fa fa-check fa-fw fa-lg"></i>
+        </CSSTransitionGroup>
     } else {
       // return visibility:hidden
       return (<i className="icon-invisible fa fa-check fa-fw fa-lg"></i>)
@@ -108,8 +121,8 @@ var AddDistractionForm = React.createClass({
                 type="submit"
                 ><i className="fa fa-plus fa-fw "></i>
               </button>
-              {this.showCheckIcon()}
             </span>
+            {this.showCheckIcon()}
           </div>
         </form>
       </div>  /* ./distractions-wrapper  */

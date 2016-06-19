@@ -65,7 +65,7 @@ var Timer = React.createClass({
         <div className="row fullscreen-mid-pomodoro">
           <div className="fullscreen-inner-wrapper">
             <div className='current-activity col-xs-12 col-sm-10 col-md-8 center-block'>
-              {this.props.currentSession.name} : {'in-progress'}
+              {this.props.currentSession.name} : in-progress
             </div>
             <div className='col-xs-12 col-sm-10 col-md-8 timer-wrapper center-block'>
               <button
