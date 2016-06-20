@@ -6,7 +6,7 @@ var AddDistractionForm = React.createClass({
   getInitialState : function() {
     return {
       distractionInputIsFocused : false,
-      submittedDistraction : null,
+      submittedDistraction : [],
     }
   },
   inputOnFocus : function(event) {
@@ -48,10 +48,23 @@ var AddDistractionForm = React.createClass({
     this.props.addDistraction(distraction);
     this.refs.distractionForm.reset();
     // turn on submittedDistraction
-    this.state.submittedDistraction = true;
-    this.setState({
-      submittedDistraction : this.state.submittedDistraction,
-    });
+    if (this.state.submittedDistraction.length === 0) {
+      var now = (new Date()).toTimeString();
+      this.state.submittedDistraction = [
+        ...this.state.submittedDistraction,
+        now
+      ];
+
+      this.setState({
+        submittedDistraction : this.state.submittedDistraction,
+      });
+      setTimeout(() => {
+        this.state.submittedDistraction = this.state.submittedDistraction.filter((x) => x !== now);
+        this.setState({
+          submittedDistraction : this.state.submittedDistraction,
+        });
+      }, 4000);
+    }
   },
   renderListOfDistractions : function() {
     var distractions = this.props.distractions;
@@ -65,40 +78,22 @@ var AddDistractionForm = React.createClass({
     }
   },
   showCheckIcon : function() {
-    if (this.state.submittedDistraction) {
-      console.log(CSSTransitionGroup);
-      setTimeout(() => {
-        this.setState({submittedDistraction: null});
-      }, 4000);
-      return (
-        <CSSTransitionGroup
-          className="just-submitted"
-          component="span"
-          transitionAppear={true}
-          transitionName="just-submitted"
-          transitionEnterTimeout={4000}
-          transitionLeaveTimeout={4000}
-          transitionAppearTimeout={4000}
-        >
-          <i className="fa fa-check fa-fw fa-lg" key="nickykey"></i>
-        </CSSTransitionGroup>
-      )
-    } else {
+    //console.log(CSSTransitionGroup);
+    return (
       <CSSTransitionGroup
         className="just-submitted"
         component="span"
         transitionAppear={true}
         transitionName="just-submitted"
-        transitionEnterTimeout={4000}
-        transitionLeaveTimeout={4000}
-        transitionAppearTimeout={4000}
+        transitionEnterTimeout={1000}
+        transitionLeaveTimeout={1000}
+        transitionAppearTimeout={1000}
       >
+        {this.state.submittedDistraction.map((k) =>
+          <i className="fa fa-check fa-fw fa-lg" key={k}></i>
+        )}
       </CSSTransitionGroup>
-      // return visibility:hidden
-      /*
-      return (<i className="icon-invisible fa fa-check fa-fw fa-lg" key="nickykey"></i>)
-      */
-    }
+    )
   },
   render : function() {
     var lexicalThis = this;
