@@ -67,7 +67,10 @@ var AddDistractionForm = React.createClass({
   showCheckIcon : function() {
     if (this.state.submittedDistraction) {
       console.log(CSSTransitionGroup);
-      return
+      setTimeout(() => {
+        this.setState({submittedDistraction: null});
+      }, 4000);
+      return (
         <CSSTransitionGroup
           className="just-submitted"
           component="span"
@@ -75,12 +78,26 @@ var AddDistractionForm = React.createClass({
           transitionName="just-submitted"
           transitionEnterTimeout={4000}
           transitionLeaveTimeout={4000}
+          transitionAppearTimeout={4000}
         >
-          <i className="fa fa-check fa-fw fa-lg"></i>
+          <i className="fa fa-check fa-fw fa-lg" key="nickykey"></i>
         </CSSTransitionGroup>
+      )
     } else {
+      <CSSTransitionGroup
+        className="just-submitted"
+        component="span"
+        transitionAppear={true}
+        transitionName="just-submitted"
+        transitionEnterTimeout={4000}
+        transitionLeaveTimeout={4000}
+        transitionAppearTimeout={4000}
+      >
+      </CSSTransitionGroup>
       // return visibility:hidden
-      return (<i className="icon-invisible fa fa-check fa-fw fa-lg"></i>)
+      /*
+      return (<i className="icon-invisible fa fa-check fa-fw fa-lg" key="nickykey"></i>)
+      */
     }
   },
   render : function() {

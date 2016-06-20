@@ -5,18 +5,22 @@
   appear Must set transitionAppear={true} on animation component
 */
 
-.just-submitted-enter
-  transition all 0.4s
+.just-submitted
   color chartreuse
+
+.just-submitted-appear
+  transition all 4s
   opacity 0
-  &.just-submitted-enter-active
+  &.just-submitted-appear-active
     opacity 1
 
 .just-submitted-leave
-  transition all 0.4s
+  transition all 4s
+  border 2px solid cadetblue
   opacity 1
   &.just-submitted-leave-active
     opacity 0
+    border 2px solid deeppink
 
 
 
